@@ -11,15 +11,16 @@ CREATE TABLE `SCCSystemStatus`(
 
 CREATE TABLE `User` (
   `userId` int PRIMARY KEY AUTO_INCREMENT,
-  `username` varchar(255) NOT NULL,
+  `username` varchar(255) UNIQUE NOT NULL,
   `password` varchar(255) NOT NULL,
+  `salt` VARCHAR(255) NOT NULL,
   `firstname` varchar(255),
   `lastname` varchar(255),
-  `email` varchar(255) NOT NULL,
+  `email` varchar(255) UNIQUE NOT NULL,
   `age` int,
   `profession` varchar(255),
   `dateOfBirth` date,
-  `roleInSCC_id` int
+  `roleInSCC_id` int DEFAULT 3
 );
 
 CREATE TABLE `RoleInSCC` (

@@ -25,14 +25,14 @@ INSERT INTO `SCCNetwork`.`Content`(`contentId`, `contentType`, `value`) VALUES
 										Please note that there is a grace period of seven days from the creation date of the group to confirm your payment.
                                         After your grace period has passed, your event will be ''Active'' but there will be some restrictions until a payment is received.');
                                         
-INSERT INTO `SCCNetwork`.`User`(`userId`, `username`, `password`, `firstname`, `lastname`, `email`, 
+INSERT INTO `SCCNetwork`.`User`(`userId`, `username`, `password`, `salt`, `firstname`, `lastname`, `email`, 
 								`age`, `profession`, `dateOfBirth`, `roleInSCC_id`) VALUES 
-                    (1, 'root', 'root', 'Fabian', 'Vergara', 'root@scc.network', 26, 'Developer', '93-11-23', 1),
-                    (2, 'sleblanc', 'abc123', 'Sophie', 'Leblanc', 'sleblanc@apple.ca', 28, 'Project Manager', '91-12-12', 1),
-                    (3, 'Turtle', 'abcdefg', 'Franklin', 'Glen', 'f_glen@tesla.com', 32, 'Engineer', '87-02-28', 2),
-                    (4, 'Lauversan', 'medicina', 'Laura', 'Vergara', 'md_vergara@med.towmhospital.ca', 29, 'Doctor', '90-08-27', 3),
-                    (5, 'dballerini', 'mecheng', 'Daniel', 'Ballerini', 'd_baller@encs.concordia.ca', 24, 'Student', '94-08-30', 2),
-					(6, 'VergaraF', '123456', 'Fabian', 'Vergara', 'fvergara@egenetec.com', 26, 'Developer', '93-11-23', 1);
+                    (1, 'root', 'root', 'test', 'Fabian', 'Vergara', 'root@scc.network', 26, 'Developer', '93-11-23', 1),
+                    (2, 'sleblanc', 'abc123', 'test', 'Sophie', 'Leblanc', 'sleblanc@apple.ca', 28, 'Project Manager', '91-12-12', 1),
+                    (3, 'Turtle', 'abcdefg', 'test', 'Franklin', 'Glen', 'f_glen@tesla.com', 32, 'Engineer', '87-02-28', 2),
+                    (4, 'Lauversan', 'medicina', 'test', 'Laura', 'Vergara', 'md_vergara@med.towmhospital.ca', 29, 'Doctor', '90-08-27', 3),
+                    (5, 'dballerini', 'mecheng', 'test', 'Daniel', 'Ballerini', 'd_baller@encs.concordia.ca', 24, 'Student', '94-08-30', 2),
+					(6, 'VergaraF', '123456', 'test', 'Fabian', 'Vergara', 'fvergara@egenetec.com', 26, 'Developer', '93-11-23', 1);
 
                     
 INSERT INTO `SCCNetwork`.`Event`(`eventId`, `event_name`, `eventType_id`) VALUES
