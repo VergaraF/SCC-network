@@ -66,7 +66,8 @@
 					Helper::setSessionVariable("MESSAGE" ,"The username or password is wrong! Please try again");
 				}
 
-			}else{
+			}
+			else{
 				Helper::setSessionVariable("MESSAGE", "The username does not exist in the database! Do you really have an account?");
 			}
 
@@ -178,10 +179,13 @@
 					parent::executeSqlQuery($updatePass);
 					echo "Password changed successfully";
 				}
+
 				else{
 					echo "Your old pass is wrong! please retype it";
 				}
-			}else{
+
+			}
+			else{
 				echo "Confirmation failed";
 			}
 		}
