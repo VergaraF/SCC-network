@@ -4,6 +4,7 @@ CREATE DATABASE IF NOT EXISTS SCCNetwork;
 USE SCCNetwork;
 
 CREATE TABLE `SCCSystemStatus`(
+	`id` int PRIMARY KEY,
     `IsDatabaseCreated` boolean DEFAULT false,
     `IsDatabasePopulated` boolean DEFAULT false
 );
@@ -62,7 +63,7 @@ CREATE TABLE `Event` (
 
 CREATE TABLE `Page` (
   `pageId` int PRIMARY KEY AUTO_INCREMENT,
-  `content` varchar(255)
+  `content` text
 );
 
 CREATE TABLE `EventStatus` (
@@ -99,7 +100,14 @@ CREATE TABLE `Fee` (
 CREATE TABLE `Content` (
   `contentId` int PRIMARY KEY AUTO_INCREMENT,
   `contentType` varchar(255),
-  `value` varchar(255)
+  `value` text
+);
+
+CREATE TABLE `DefaultEventConfiguration` (
+  `defaultEventConfigurationId` int PRIMARY KEY AUTO_INCREMENT,
+  `defaultBandwidthLimitInMB` int,
+  `defaultStorageLimitInMb` int,
+  `defaultInitialActiveEventConfigurationTimeInHours` int
 );
 
 CREATE TABLE `participant_interest` (
@@ -112,7 +120,7 @@ CREATE TABLE `event_manager` (
   `event_id` int NOT NULL,
   `manager_id` int NOT NULL,
   `event_instance_id` int NOT NULL,
-  `bankingInfo_id` int NOT NULL,
+  `bankingInfo_id` int,
   `assignedAt` datetime,
   PRIMARY KEY (`event_id`, `manager_id`)
 );
@@ -120,13 +128,13 @@ CREATE TABLE `event_manager` (
 CREATE TABLE `event_instance` (
   `event_instanceId` int PRIMARY KEY AUTO_INCREMENT,
   `event_id` int NOT NULL,
-  `storage_limit` int,
-  `bandwith_limit` int,
-  `storage_usage` int,
-  `bandwidth_usage` int,
-  `eventStatus_id` int NOT NULL,
-  `lifetime` date NOT NULL,
-  `page_id` int NOT NULL,
+  `storage_limit` int DEFAULT 2048,
+  `bandwith_limit` int DEFAULT 2048,
+  `storage_usage` int DEFAULT 0,
+  `bandwidth_usage` int DEFAULT 0,
+  `eventStatus_id` int DEFAULT 1,
+  `lifetime` date,
+  `page_id` int DEFAULT 1,
   `bill_id` int
 );
 
@@ -172,8 +180,8 @@ CREATE TABLE `Bill` (
 
 CREATE TABLE `Message` (
   `messageId` int PRIMARY KEY,
-  `content` varchar(255),
-  `timestamp` datetime
+  `content` text,
+  `timestamp` datetime DEFAULT CURRENT_TIMESTAMP
 );
 
 CREATE TABLE `messages_conversation` (
@@ -237,4 +245,4 @@ ALTER TABLE `messages_conversation` ADD FOREIGN KEY (`message_id`) REFERENCES `M
 ALTER TABLE `messages_conversation` ADD FOREIGN KEY (`recipient_id`) REFERENCES `Participant` (`participantId`);
 ALTER TABLE `messages_conversation` ADD FOREIGN KEY (`sender_id`) REFERENCES `Participant` (`participantId`);
 
-INSERT INTO `SCCSystemStatus`(IsDatabaseCreated, IsDatabasePopulated) VALUES(true, false);
+INSERT INTO `SCCSystemStatus`(id, IsDatabaseCreated, IsDatabasePopulated) VALUES('1', true, false);
