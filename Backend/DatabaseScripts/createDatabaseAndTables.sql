@@ -20,7 +20,7 @@ CREATE TABLE `User` (
   `age` int,
   `profession` varchar(255),
   `dateOfBirth` date,
-  `roleInSCC_id` int DEFAULT 3
+  `roleInSCC_id` int
 );
 
 CREATE TABLE `RoleInSCC` (

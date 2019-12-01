@@ -1,11 +1,8 @@
+<?php
+    session_start();
+?>
 <!DOCTYPE html>
 <html>
-
-<head>
-  <title>The SCC-Network</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" type="text/css" href="./Styles/main.css">
-</head>
 
 <?php include('./Predefined/header.php'); ?>
 

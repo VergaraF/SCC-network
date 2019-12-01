@@ -4,7 +4,7 @@
         public $connection;
         
 		public function createConnection(){
-			$servername = "localhost";
+			$servername = "127.0.0.1";
 			$username = "root";
 			$password = "rootpassword";
 			$db = "SCCNetwork";
@@ -13,7 +13,8 @@
 			// Check connection
 			if ($this->connection->connect_error) {
 			    die("Connection failed: " . $this->connection->connect_error);
-			}
+            }
+            
 			$this->connection->set_charset("utf8");
 			return $this->connection;
 		}

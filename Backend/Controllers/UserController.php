@@ -74,7 +74,7 @@
 			Helper::redirectToLocation("login.php");
 		}
 
-		public function getRoleInSystem($username){
+		public function getUserRoleInSystem($username){
 			$roleArray = $this->getSpecificUser($username);
 			$roleId = "";
 			for ($row=0; $row < count($roleArray); $row++) { 
@@ -181,7 +181,7 @@
 				}
 
 				else{
-					echo "Your old pass is wrong! please retype it";
+					echo "Your old password is incorrect! Please retype it";
 				}
 
 			}
