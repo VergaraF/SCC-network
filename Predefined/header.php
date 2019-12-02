@@ -24,13 +24,13 @@
             </div>
     <?php
         }else{
-            echo "Welcome, visitor!";
+            echo "Welcome, <b>visitor</b>!";
     ?>
             </div>
             <div class="col-2 no-padding">
                 <button class="welcome-nav-bar-btn" onClick="window.location.href='login.php'" >Login</button>
             </div>
-            <div class="col-2 no-padding">
+            <div class="col-1 no-padding">
                 <button class="welcome-nav-bar-btn" onClick="window.location.href='signup.php'">Signup</button>
             </div>
     <?php

@@ -1,4 +1,5 @@
 <?php
+session_start();
 include('./Predefined/init.php');
 ?>
 <html>

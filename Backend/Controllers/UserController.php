@@ -68,7 +68,6 @@
 						   $this->memoryCache->setUserInCache($username, $db_userId);
 
 						   Helper::setSessionVariable("USERNAME", $username);
-						   Helper::setSessionVariable("ROLE", $this->getRoleInSystem($db_username));
 						   Helper::setSessionVariable("IDENTIFIER", $db_userId);
 
 						   Helper::redirectToLocation("login.php?redirect=index.php");

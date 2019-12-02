@@ -1,5 +1,6 @@
 <?php
     require_once('./Predefined/init.php');
+    session_start();
     $userController = new UserController();
 
     if (isset($_GET['redirect'])) {
@@ -10,12 +11,12 @@
     }
 ?>
 <html>
-<head>
-  <title>The SCC-Network - Log in</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" type="text/css" href="./Styles/main.css">
-  <link rel="stylesheet" type="text/css" href="./Styles/joiningSite.css">
-</head>
+    <head>
+        <title>The SCC-Network - Log in</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" type="text/css" href="./Styles/main.css">
+        <link rel="stylesheet" type="text/css" href="./Styles/joiningSite.css">
+    </head>
 <?php
     require_once('./Predefined/header.php'); 
     require_once('./Predefined/sideMenu.php');
