@@ -1,9 +1,8 @@
 <?php
 	class DatabaseController {
-
         public $connection;
-        
-		public function createConnection(){
+
+        public function createConnection(){
 			$servername = "127.0.0.1";
 			$username = "root";
 			$password = "rootpassword";
@@ -43,23 +42,25 @@
 
 		//this method is used to return a resultSet of a SELECT statement
 		public function getResultSetOf($query){
-			$rs = mysqli_query($this->createConnection(), $query) or die($this->createConnection()->error);
-			return $rs;
+			$resultSet = mysqli_query($this->createConnection(), $query) or die($this->connection->error);
+			return $resultSet;
 		}
 
 		public function getResultSetAsArray($query){
-			$rs = mysqli_query($this->createConnection(), $query) or die($this->connection->error);
-			if($rs->num_rows > 0){
+			$resultSet = mysqli_query($this->createConnection(), $query) or die($this->connection->error);
+			if($resullSet && $resultSet->num_rows > 0){
 				$index = 0;
-				while($row = $rs->fetch_assoc()){
+				while($row = $resultSet->fetch_assoc()){
 					foreach ($row as $key => $value) {
 						$arrayAsResult[$index][$key] = $value;
 					}
 					$index++;
-				}
+                }
+                
 				return $arrayAsResult;
-			}
-			return null;
+            }
+            
+			return array();
 		}
 	}
 ?>

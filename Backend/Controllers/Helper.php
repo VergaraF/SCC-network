@@ -4,6 +4,7 @@
         public const ADMIN_USER_ROLE_ID = 1;
         public const CONTROLLER_USER_ROLE_ID = 2;
         public const REGULAR_USER_ROLE_ID = 3;
+        public const USER_NOT_IN_APP_CACHE = -1;
 
 		public static function setSessionVariable($sessionVar, $message){
 			$_SESSION[$sessionVar] = $message;

@@ -1,15 +1,15 @@
 USE SCCNetwork;
-DROP TRIGGER IF EXISTS after_user_insert_create_derived_user;
-DROP TRIGGER IF EXISTS before_deleting_administrator;
-DROP TRIGGER IF EXISTS before_deleting_user;
-DROP TRIGGER IF EXISTS after_event_type_insert;
-DROP TRIGGER IF EXISTS after_manager_insert_create_participant;
-DROP TRIGGER IF EXISTS before_event_instance_insert;
-DROP TRIGGER IF EXISTS after_event_instance_insert;
-DROP TRIGGER IF EXISTS after_event_manager_insert;
+DROP TRIGGER IF EXISTS after_user_insert_create_derived_userAdmin_participant_or_controller;
+DROP TRIGGER IF EXISTS before_deleting_administrator_prevent_deleting_root;
+DROP TRIGGER IF EXISTS before_deleting_user_prevent_deleting_admin_or_root;
+DROP TRIGGER IF EXISTS after_event_type_insert_insert_its_associated_fee;
+DROP TRIGGER IF EXISTS after_manager_insert_create_participant_if_not_existing;
+DROP TRIGGER IF EXISTS before_event_instance_insert_check_input_and_create_default_page;
+DROP TRIGGER IF EXISTS after_event_instance_insert_create_event_participant_and_event_instance_content;
+DROP TRIGGER IF EXISTS after_event_manager_insert_create_event_participant;
 
 DELIMITER $$
-CREATE TRIGGER after_user_insert_create_derived_user AFTER INSERT ON `User` FOR EACH ROW
+CREATE TRIGGER after_user_insert_create_derived_userAdmin_participant_or_controller AFTER INSERT ON `User` FOR EACH ROW
 BEGIN
 	DECLARE role_name_in_scc varchar(255);
 
@@ -26,7 +26,7 @@ BEGIN
 END;
 $$
 
-CREATE TRIGGER before_deleting_administrator BEFORE DELETE ON `Administrator` FOR EACH ROW
+CREATE TRIGGER before_deleting_administrator_prevent_deleting_root BEFORE DELETE ON `Administrator` FOR EACH ROW
 BEGIN
 	IF (OLD.user_id = 1) THEN
     		SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'You cannot delete the root user.';
@@ -34,7 +34,7 @@ BEGIN
 END;
 $$
     
-CREATE TRIGGER before_deleting_user BEFORE DELETE ON `User` FOR EACH ROW
+CREATE TRIGGER before_deleting_user_prevent_deleting_admin_or_root BEFORE DELETE ON `User` FOR EACH ROW
 BEGIN
 	DECLARE admin_id int DEFAULT 0;
     
@@ -48,7 +48,7 @@ BEGIN
 END;
 $$
 
-CREATE TRIGGER after_event_type_insert AFTER INSERT ON `EventType` FOR EACH ROW
+CREATE TRIGGER after_event_type_insert_insert_its_associated_fee AFTER INSERT ON `EventType` FOR EACH ROW
 BEGIN
 	DECLARE flat_rate int DEFAULT 100;
     DECLARE rate_for_extra_storage_unit int DEFAULT 0.0125;
@@ -67,7 +67,7 @@ BEGIN
 END;
 $$
 
-CREATE TRIGGER after_manager_insert_create_participant AFTER INSERT ON `Manager` FOR EACH ROW
+CREATE TRIGGER after_manager_insert_create_participant_if_not_existing AFTER INSERT ON `Manager` FOR EACH ROW
 BEGIN
 	DECLARE existing_participant_id int;
     
@@ -81,7 +81,7 @@ BEGIN
 END;
 $$
 
-CREATE TRIGGER before_event_instance_insert BEFORE INSERT ON `event_instance` FOR EACH ROW
+CREATE TRIGGER before_event_instance_insert_check_input_and_create_default_page BEFORE INSERT ON `event_instance` FOR EACH ROW
 BEGIN
 	DECLARE	default_storage_limit int;
 	DECLARE default_bandwidth_limit int;
@@ -116,7 +116,7 @@ BEGIN
 END;
 $$
 
-CREATE TRIGGER after_event_instance_insert AFTER INSERT ON `event_instance` FOR EACH ROW
+CREATE TRIGGER after_event_instance_insert_create_event_participant_and_event_instance_content AFTER INSERT ON `event_instance` FOR EACH ROW
 BEGIN
 	DECLARE pk_value_of_default_message int;
 
@@ -134,7 +134,7 @@ BEGIN
 END;
 $$
 
-CREATE TRIGGER after_event_manager_insert AFTER INSERT ON `event_manager`FOR EACH ROW
+CREATE TRIGGER after_event_manager_insert_create_event_participant AFTER INSERT ON `event_manager`FOR EACH ROW
 BEGIN
 	DECLARE manager_event_participant_id int;
     

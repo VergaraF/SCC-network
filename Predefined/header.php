@@ -1,4 +1,3 @@
-
 <head>
   <title>The SCC-Network</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -32,8 +31,10 @@
             <div class="col-2 no-padding">
                 <button class="welcome-nav-bar-btn">Messages</button>
             </div>
+            <div class="col-2 no-padding">
+                <button class="welcome-nav-bar-btn">Logout</button>
+            </div>
     <?php
-    
             if(strcmp($userRole, Helper::ADMIN_USER_ROLE_ID) === 0){
 
             }
@@ -41,6 +42,7 @@
         }else{
             echo "Welcome, visitor!";
     ?>
+            </div>
             <div class="col-2 no-padding">
                 <button class="welcome-nav-bar-btn">Login</button>
             </div>

@@ -1,5 +1,11 @@
 <?php
+	include('./MemoryCache.php');
 	class UserController extends DatabaseController{
+		public $memoryCache;
+
+		function __construct(){
+			$this->memoryCache = MemoryCache::getInstance();
+		}
 
 		public function processSignupForm($post){
 			$passwordLength = 8;
@@ -22,12 +28,14 @@
 					$saltedPassword = $this->hashPassword($password, $salt);
 					$newUser = "INSERT INTO User VALUES ('$username', '$saltedPassword', 
 										'$salt', '$firstName', '$lastName', '$email', '$age', '$profession', '$dateOfBirth', '$roleinSCCId')";
-					$this->insertUser($newUser);
+					if (!$this->insertUser($newUser)){
+						Helper::setSessionVariable("MESSAGE", "There was an error creating your user. Try again at a later time.");
+					}
 					parent::closeConnection();
 					return;
 				}
 				else{
-					Helper::setSessionVariable("MESSAGE", "The username is already taken! please take another one");
+					Helper::setSessionVariable("MESSAGE", "The username is already taken! Please take another one");
 				}
 
 			}
@@ -40,11 +48,12 @@
 
 		public function processLoginForm($post){
 			$username = parent::getEscaped($post['username']);
-			$password = parent::getEscaped($post['password']);
+			$password = parent::getEscaped($post['password']);			
 
 			$getInfo = parent::getResultSetAsArray("SELECT * FROM User WHERE username = '$username'");
 			if(count($getInfo) > 0){
 				for($row = 0; $row < count($getInfo); $row++){
+					$db_userid   = $getInfo[$row]['userId'];
 					$db_username = $getInfo[$row]['username'];
 					$db_password = $getInfo[$row]['password'];
 					$db_salt 	 = $getInfo[$row]['salt'];
@@ -57,10 +66,14 @@
 					//if the salt is 'test', don't hash
 					if ((strcmp($db_salt, "test") === 0 && strcmp($db_password, $password) === 0) 
 					   || (strcmp($db_password, $this->hashPassword($password, $db_salt)) === 0)){
-						Helper::setSessionVariable("USERNAME", $username);
-						Helper::setSessionVariable("ROLE", $this->getRoleInSystem($db_username));
-						Helper::redirectToLocation("index.php");
-						return;
+						   $this->memoryCache->setUserInCache($username, $db_userId);
+
+						   Helper::setSessionVariable("USERNAME", $username);
+						   Helper::setSessionVariable("ROLE", $this->getRoleInSystem($db_username));
+						   Helper::setSessionVariable("IDENTIFIER", $db_userId);
+
+						   Helper::redirectToLocation("index.php");
+						   return;
 					}
 
 					Helper::setSessionVariable("MESSAGE" ,"The username or password is wrong! Please try again");
@@ -72,6 +85,40 @@
 			}
 
 			Helper::redirectToLocation("login.php");
+		}
+
+		public function getUserId($username){
+			$u_id = $this->memoryCache->getUserIdFromCache($username);
+			if ($u_id != Helper::USER_NOT_IN_APP_CACHE){
+				return $u_id;
+			}
+
+			$u_id = $this->getUserIdFromDatabase($username);
+
+			if ($u_id != Helper::USER_NOT_IN_APP_CACHE){
+				$this->memoryCache->setUserInCache($username, $u_id);
+				return $u_id;
+			}
+
+			return Helper::USER_NOT_IN_APP_CACHE;
+		}
+
+		private function getUserIdFromCache($username){
+			return $this->memoryCache->getUserIdByUsername($username);
+		}
+
+		private function getUserIdFromDatabase($username){
+			$selectUserId = "SELECT userId FROM User WHERE username = '" . $username . "'";
+			$rs = mysqli_query(parent::createConnection(), $selectUserId);
+			if ($rs->num_rows > 0) {
+				while($row = $rs->fetch_assoc()) {
+					$user_id = $row['userId'];
+				}
+
+				return $user_id;
+			}
+
+			return Helper::USER_NOT_IN_APP_CACHE;
 		}
 
 		public function getUserRoleInSystem($username){
@@ -92,29 +139,31 @@
 			return (isset($_SESSION["USERNAME"]) && $_SESSION["USERNAME"] != null);
 		}
 
+		public function isUserAnEventManager($userId){
+			$query = "SELECT * FROM event_manager AS e_m 
+					  INNER JOIN Manager AS ma ON e_m.manager_id = ma.managerId
+					  WHERE ma.user_id = '$userId'";
+
+			$array = parent::getResultSetAsArray($query);
+			if (count($array) > 0){
+				return true;
+			}
+
+			return false;
+		}
+
 		public function insertUser($query){
 			if (parent::createConnection()->query($query) === TRUE) {
 				Helper::setSessionVariable("MESSAGE", "Your account has been created! You may login now");
 				Helper::redirectToLocation("login.php");
+				return true;
 			}
+
+			return false;
 		}
 
 		public function getAllUsers(){
 			return parent::getResultSetAsArray("SELECT * FROM User");
-		}
-
-		public function getUserId(){
-			$selectUserId = "SELECT userId FROM User WHERE username = '" . $_SESSION['USERNAME'] . "'";
-			$rs = mysqli_query(parent::createConnection(), $selectUserId);
-			if ($rs->num_rows > 0) {
-				while($row = $rs->fetch_assoc()) {
-					$user_id = $row['userId'];
-				}
-
-				return $user_id;
-			}
-
-			return null;
 		}
 
 		public function getUsersProfileInfo(){
@@ -141,6 +190,7 @@
 		public function logout(){
 			unset($_SESSION['USERNAME']);
 			unset($_SESSION['ROLE']);
+			unset($_SESSION['IDENTIFIER']);
 			header("location: index.php");
 			session_start();
 			session_unset();

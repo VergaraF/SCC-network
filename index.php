@@ -4,20 +4,10 @@
 <!DOCTYPE html>
 <html>
 
-<?php include('./Predefined/header.php'); ?>
-
-<div class="row">
-  <div class="col-2 menu">
-    <ul>
-    <li>Home page</li>
-    <li>My events</li>
-    <li>My groups</li>
-    <li>Event manager panel </li>
-    <li>Admin panel</li>
-    <li>Controller panel</li>
-    </ul>
-  </div>
-
+<?php 
+  include('./Predefined/header.php'); 
+  include('./Predefined/sideMenu.php');  
+?>
   <div class="col-8">
     <h1>Share, Contribute, Comment... Connect. The Network.</h1>
     <p><b>Sign up now</b> to be part of the <b>overgrowing community</b> of participants in a whole variety of events. </br> </br>
