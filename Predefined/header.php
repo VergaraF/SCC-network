@@ -1,54 +1,37 @@
-<head>
-  <title>The SCC-Network</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" type="text/css" href="./Styles/main.css">
-</head>
 <body>
     <div class="header">
         <h1>The SCC-Network</h1>
     </div>
-
     <div class = "row welcome-nav-bar">
-        <div class="col-8">
-
+        <div class="col-9">
     <?php
-        include('./Backend/Controllers/DatabaseController.php');
-        include('./Backend/Controllers/UserController.php');
 
-        $dbController = new DatabaseController();
+        require_once('init.php');
         $userController = new UserController();
 
-        $userRole = $userController->getUserRoleInSystem($_SESSION['USERNAME']);
-
         if ($userController->isLoggedIn()){
-            echo "Welcome, " +  $_SESSION['USERNAME'] + "!";
+            echo "Welcome, <b>" .  $_SESSION['USERNAME'] . "</b>!";
     ?>
             </div>
-            <div class="col-2 no-padding">
-                <button class="welcome-nav-bar-btn">Profile</button>
+            <div class="col-1 no-padding">
+                <button class="welcome-nav-bar-btn" onClick="window.location.href='profile.php'">Profile</button>
             </div>
-
-            <div class="col-2 no-padding">
-                <button class="welcome-nav-bar-btn">Messages</button>
+            <div class="col-1 no-padding">
+                <button class="welcome-nav-bar-btn" onClick="window.location.href='messages.php'">Messages</button>
             </div>
-            <div class="col-2 no-padding">
-                <button class="welcome-nav-bar-btn">Logout</button>
+            <div class="col-1 no-padding">
+                <button class="welcome-nav-bar-btn" onClick="window.location.href='logout.php'">Logout</button>
             </div>
     <?php
-            if(strcmp($userRole, Helper::ADMIN_USER_ROLE_ID) === 0){
-
-            }
-
         }else{
             echo "Welcome, visitor!";
     ?>
             </div>
             <div class="col-2 no-padding">
-                <button class="welcome-nav-bar-btn">Login</button>
+                <button class="welcome-nav-bar-btn" onClick="window.location.href='login.php'" >Login</button>
             </div>
-
             <div class="col-2 no-padding">
-                <button class="welcome-nav-bar-btn">Signup</button>
+                <button class="welcome-nav-bar-btn" onClick="window.location.href='signup.php'">Signup</button>
             </div>
     <?php
         }

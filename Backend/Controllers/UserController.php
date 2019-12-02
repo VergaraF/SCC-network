@@ -1,5 +1,4 @@
 <?php
-	include('./MemoryCache.php');
 	class UserController extends DatabaseController{
 		public $memoryCache;
 
@@ -43,7 +42,7 @@
 				Helper::setSessionVariable("MESSAGE", "The password confirmation failed! Please try again");
 			}
 
-			Helper::redirectToLocation("signUp.php");
+			Helper::redirectToLocation("signup.php");
 		}
 
 		public function processLoginForm($post){
@@ -72,8 +71,9 @@
 						   Helper::setSessionVariable("ROLE", $this->getRoleInSystem($db_username));
 						   Helper::setSessionVariable("IDENTIFIER", $db_userId);
 
-						   Helper::redirectToLocation("index.php");
-						   return;
+						   Helper::redirectToLocation("login.php?redirect=index.php");
+						
+						return;
 					}
 
 					Helper::setSessionVariable("MESSAGE" ,"The username or password is wrong! Please try again");
@@ -83,8 +83,6 @@
 			else{
 				Helper::setSessionVariable("MESSAGE", "The username does not exist in the database! Do you really have an account?");
 			}
-
-			Helper::redirectToLocation("login.php");
 		}
 
 		public function getUserId($username){
@@ -195,13 +193,6 @@
 			session_start();
 			session_unset();
 			session_destroy();
-		}
-
-		public function displayMessage(){
-			if(isset($_SESSION['MESSAGE'])) {
-				echo "<p>" . $_SESSION['MESSAGE'] . "</p>";
-				unset($_SESSION['MESSAGE']);
-			}
 		}
 
 		public function hashPassword($password, $salt){

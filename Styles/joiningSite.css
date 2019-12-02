@@ -1,0 +1,37 @@
+.login, .signup, .upload {
+    width: 100%;
+    border: none;
+    height: 45px;
+    font-size: 16pt;
+    background-color: #424250;
+    color: white;
+    display: block;
+}
+
+.error{
+    color: red;
+    visibility: hidden;
+}
+
+.password, .username {
+    background-color: #D4D4BF;
+    color: #424250;
+    width: 100%;
+    border: none;
+    height: 40px;
+    font-size: 15pt;
+    padding-left: 20px;
+}
+
+.password-label, .username-label{
+    height: 40px;
+    width: 100%;
+    font-size: 15pt; 
+    display: block;
+    line-height: 40px;
+}
+
+.padded-row{
+    padding-left: 30px;
+    padding-right: 30px;
+}

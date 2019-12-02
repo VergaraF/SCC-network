@@ -4,7 +4,7 @@
         private static $instance = null;
 
         function __construct(){
-            $this->mapWithUsernameAsKey = new map();
+            $this->mapWithUsernameAsKey = Array();
         }
 
         public static function getInstance()
@@ -18,11 +18,16 @@
         }
 
         public function getUserIdByUsername($username){
-            return $mapWithUsernameAsKey->get($username, Helper::USER_NOT_IN_APP_CACHE);
+            $result =  $mapWithUsernameAsKey[$username];
+            if ($result == null){
+                return Helper::USER_NOT_IN_APP_CACHE;
+            }
+
+            return $result;
         }
 
         public function setUserInCache($username, $uid){
-            $mapWithUsernameAsKeyp->put($username, $uid);
+            $mapWithUsernameAsKeyp[$username] = $uid;
         }
     }
 ?>

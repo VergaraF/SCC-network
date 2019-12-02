@@ -15,5 +15,12 @@
             header("Location: $location");
             exit();
         }
+
+        public static function displayMessage(){
+            if(isset($_SESSION['MESSAGE'])) {
+				echo "<p>" . $_SESSION['MESSAGE'] . "</p>";
+				unset($_SESSION['MESSAGE']);
+			}
+        }
     }
 ?>
