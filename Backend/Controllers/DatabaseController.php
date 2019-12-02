@@ -32,11 +32,11 @@
 		}
 
 		public function executeSqlQuery($sqlQuery){
-			if($this->createConnection()->query($sqlQuery) === TRUE){
-				echo "SUCCESS-";
-			}else{
-				echo "Error: " . $this->connection->error;
+			if($this->createConnection()->query($sqlQuery)){
+				return true;
 			}
+			
+			return false;
 		}
 
 		//this method is used to return a resultSet of a SELECT statement

@@ -34,7 +34,7 @@
                     <div class="col-9"><input type="text"  name="username" class="username" id="username" placeholder="Username" required/></div>
                     <div class="col-3"><label class="password-label" for="password"><b>Password : </b></label></div>
                     <div class="col-9"><input type="password" name="password" class="password" id="password" placeholder="Password" required/></div>
-                    <div class="col-12"><label class="error">Error : Invalid username or password!</label></div>
+                    <div class="col-12"><label class="error"><?php Helper::displayMessage();?></label></div>
                     <div class="col-12"><input name="login" type="submit" value="Login" class="login btn"/></div>
                 </form>
             </div>

@@ -13,22 +13,22 @@
     visibility: hidden;
 }
 
-.password, .username {
+.password, .username, .firstname, .lastname, .dob, .profession-drop-down, .email {
     background-color: #D4D4BF;
     color: #424250;
     width: 100%;
     border: none;
-    height: 40px;
-    font-size: 15pt;
+    height: 35px;
+    font-size: 14pt;
     padding-left: 20px;
 }
 
-.password-label, .username-label{
-    height: 40px;
+.password-label, .username-label, .firstname-label, .lastname-label, .dob-label, .profession-label, .email-label{
+    height: 35px;
     width: 100%;
-    font-size: 15pt; 
+    font-size: 14pt; 
     display: block;
-    line-height: 40px;
+    line-height: 35px;
 }
 
 .padded-row{

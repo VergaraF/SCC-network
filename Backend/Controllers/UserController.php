@@ -7,17 +7,19 @@
 		}
 
 		public function processSignupForm($post){
-			$passwordLength = 8;
-			$firstName 	 = parent::getEscaped($post['firstName']);
-			$lastName 	 = parent::getEscaped($post['lastName']);
+			$passwordLength = 6;
+			$firstName 	 = parent::getEscaped($post['firstname']);
+			$lastName 	 = parent::getEscaped($post['lastname']);
 			$email 		 = parent::getEscaped($post['email']);
-			$username 	 = parent::getEscaped($post['username']);
+			$username 	 = strtolower(parent::getEscaped($post['username']));
 			$password 	 = parent::getEscaped($post['password']);
 			$confirmPass = parent::getEscaped($post['cPassword']);
-			$age 		 = parent::getEscaped($post['age']);
 			$profession  = parent::getEscaped($post['profession']);
 			$dateOfBirth = parent::getEscaped($post['dob']);
 			$roleinSCCId = 3;
+
+			$curentDate = new DateTime();
+			$age = date_create($dateOfBirth)->diff($curentDate)->y;
 
 			$res = $this->getSpecificUser($username);
 			//this if statement executes when the passwords are identical
@@ -25,12 +27,15 @@
 				if(count($res) == 0){
 					$salt = $this->generateSalt($password, $username);
 					$saltedPassword = $this->hashPassword($password, $salt);
-					$newUser = "INSERT INTO User VALUES ('$username', '$saltedPassword', 
-										'$salt', '$firstName', '$lastName', '$email', '$age', '$profession', '$dateOfBirth', '$roleinSCCId')";
+					$newUser = "INSERT INTO User (username, password, salt, firstname, lastname, email, 
+												 age, profession, dateOfBirth, roleInSCC_id) VALUES 
+												 ('$username', '$saltedPassword', '$salt', '$firstName', '$lastName', '$email', 
+												 '$age', '$profession', '$dateOfBirth', '$roleinSCCId')";
 					if (!$this->insertUser($newUser)){
 						Helper::setSessionVariable("MESSAGE", "There was an error creating your user. Try again at a later time.");
 					}
 					parent::closeConnection();
+					Helper::redirectToLocation("signup.php?redirect=login.php");
 					return;
 				}
 				else{
@@ -46,7 +51,7 @@
 		}
 
 		public function processLoginForm($post){
-			$username = parent::getEscaped($post['username']);
+			$username = strtolower(parent::getEscaped($post['username']));
 			$password = parent::getEscaped($post['password']);			
 
 			$getInfo = parent::getResultSetAsArray("SELECT * FROM User WHERE username = '$username'");
@@ -150,9 +155,8 @@
 		}
 
 		public function insertUser($query){
-			if (parent::createConnection()->query($query) === TRUE) {
+			if (parent::executeSqlQuery($query)) {
 				Helper::setSessionVariable("MESSAGE", "Your account has been created! You may login now");
-				Helper::redirectToLocation("login.php");
 				return true;
 			}
 
