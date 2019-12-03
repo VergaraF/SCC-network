@@ -70,11 +70,11 @@
 					//if the salt is 'test', don't hash
 					if ((strcmp($db_salt, "test") === 0 && strcmp($db_password, $password) === 0) 
 					   || (strcmp($db_password, $this->hashPassword($password, $db_salt)) === 0)){
-						   $this->memoryCache->setUserInCache($username, $db_userId);
+
+						   $this->memoryCache->setUserInCache($username, $db_userid);
 
 						   Helper::setSessionVariable("USERNAME", $username);
-						   Helper::setSessionVariable("IDENTIFIER", $db_userId);
-
+						   Helper::setSessionVariable("IDENTIFIER", $db_userid);
 						   Helper::redirectToLocation("login.php?redirect=index.php");
 						
 						return;
@@ -87,26 +87,6 @@
 			else{
 				Helper::setSessionVariable("MESSAGE", "The username does not exist in the database! Do you really have an account?");
 			}
-		}
-
-		public function getUserId($username){
-			$u_id = $this->memoryCache->getUserIdFromCache($username);
-			if ($u_id != Helper::USER_NOT_IN_APP_CACHE){
-				return $u_id;
-			}
-
-			$u_id = $this->getUserIdFromDatabase($username);
-
-			if ($u_id != Helper::USER_NOT_IN_APP_CACHE){
-				$this->memoryCache->setUserInCache($username, $u_id);
-				return $u_id;
-			}
-
-			return Helper::USER_NOT_IN_APP_CACHE;
-		}
-
-		private function getUserIdFromCache($username){
-			return $this->memoryCache->getUserIdByUsername($username);
 		}
 
 		private function getUserIdFromDatabase($username){
@@ -142,6 +122,7 @@
 		}
 
 		public function isUserAnEventManager($userId){
+
 			$query = "SELECT * FROM event_manager AS e_m 
 					  INNER JOIN Manager AS ma ON e_m.manager_id = ma.managerId
 					  WHERE ma.user_id = '$userId'";
@@ -189,12 +170,9 @@
 		}
 
 		public function logout(){
-			unset($_SESSION['USERNAME']);
-			unset($_SESSION['ROLE']);
-			unset($_SESSION['IDENTIFIER']);
-			header("location: index.php");
 			session_start();
-			session_unset();
+			unset($_SESSION['USERNAME']);
+			unset($_SESSION['IDENTIFIER']);
 			session_destroy();
 		}
 

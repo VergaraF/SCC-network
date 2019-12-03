@@ -1,6 +1,6 @@
 <?php
-    require_once('./Predefined/init.php');
     session_start();
+    require_once('./Predefined/init.php');
     $userController = new UserController();
 
     if (isset($_GET['redirect'])) {

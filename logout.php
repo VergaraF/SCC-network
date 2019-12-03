@@ -1,7 +1,8 @@
 <?php
 session_start();
+unset($_SESSION['USERNAME']);
+unset($_SESSION['IDENTIFIER']);
 session_destroy();
-session_start();
 require('./Predefined/header.php');
 require('./Predefined/sideMenu.php');
 ?>

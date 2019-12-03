@@ -1,14 +1,10 @@
-
 <div class="row">
     <div class="col-2 menu">
     <ul>
         <li class="btn" onClick="window.location.href='index.php'">Home page</li>
         <?php
             if ($userController->isLoggedIn()){
-                $userRole = "none";
-                if(isset($_SESSION["USERNAME"]) && $_SESSION["USERNAME"] != null){
-                    $userRole = $userController->getUserRoleInSystem($_SESSION['USERNAME']);
-                }
+                $userRole = $userController->getUserRoleInSystem($_SESSION['USERNAME']);                
         ?>
                 <li>My events</li>
                 <li>My groups</li>

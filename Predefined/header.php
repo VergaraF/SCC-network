@@ -5,7 +5,6 @@
     <div class = "row welcome-nav-bar">
         <div class="col-9">
     <?php
-
         require_once('init.php');
         $userController = new UserController();
 
