@@ -20,7 +20,14 @@ CREATE TABLE `User` (
   `age` int,
   `profession` varchar(255),
   `dateOfBirth` date,
-  `roleInSCC_id` int
+  `roleInSCC_id` int,
+  `joinedAt` datetime DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE `Newsfeed` (
+	`newsFeedId` int PRIMARY KEY AUTO_INCREMENT,
+    `userId` int UNIQUE,
+    `checkedAt` datetime
 );
 
 CREATE TABLE `RoleInSCC` (
@@ -101,7 +108,8 @@ CREATE TABLE `Fee` (
 CREATE TABLE `Content` (
   `contentId` int PRIMARY KEY AUTO_INCREMENT,
   `contentType` varchar(255),
-  `value` text
+  `value` text,
+  `postedAt` datetime DEFAULT CURRENT_TIMESTAMP
 );
 
 CREATE TABLE `DefaultEventConfiguration` (
@@ -122,7 +130,7 @@ CREATE TABLE `event_manager` (
   `manager_id` int NOT NULL,
   `event_instance_id` int NOT NULL,
   `bankingInfo_id` int,
-  `assignedAt` datetime,
+  `assignedAt` datetime DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`event_id`, `manager_id`)
 );
 
@@ -203,6 +211,8 @@ ALTER TABLE `Participant` ADD FOREIGN KEY (`user_id`) REFERENCES `User` (`userId
 ALTER TABLE `Member` ADD FOREIGN KEY (`user_id`) REFERENCES `User` (`userId`);
 
 ALTER TABLE `Manager` ADD FOREIGN KEY (`user_id`) REFERENCES `User` (`userId`);
+
+ALTER TABLE `Newsfeed` ADD FOREIGN KEY (`userID`) REFERENCES `User` (`userId`);
 
 ALTER TABLE `Event` ADD FOREIGN KEY (`eventType_id`) REFERENCES `EventType` (`id`);
 

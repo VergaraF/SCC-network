@@ -1,6 +1,7 @@
 <?php
 	class DatabaseController {
-        public $connection;
+		public $connection;
+		public function __construct(){}
 
         public function createConnection(){
 			$host="127.0.0.1";

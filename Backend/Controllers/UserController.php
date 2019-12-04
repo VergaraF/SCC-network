@@ -33,6 +33,10 @@
 												 '$age', '$profession', '$dateOfBirth', '$roleinSCCId')";
 					if (!$this->insertUser($newUser)){
 						Helper::setSessionVariable("MESSAGE", "There was an error creating your user. Try again at a later time.");
+					}else{
+						$u_id = $this->getUserIdFromDatabase($username);
+						$newsfeedQuery = "INSERT INTO Newsfeed (userId) VALUES('$u_id')";
+						$this->insertNewsfeedRecord($newsfeedQuery);
 					}
 					parent::closeConnection();
 					Helper::redirectToLocation("signup.php?redirect=login.php");
@@ -72,6 +76,11 @@
 					   || (strcmp($db_password, $this->hashPassword($password, $db_salt)) === 0)){
 
 						   $this->memoryCache->setUserInCache($username, $db_userid);
+
+						   $newsFeedId = parent::getResultSetAsArray("SELECT newsFeedId FROM Newsfeed WHERE userId = '$db_userid'");
+						   if (count($newsFeedId) > 0){
+							Helper::setSessionVariable("NEWS_IDENTIFIER", $newsFeedId[0]['newsFeedId']);
+						   }
 
 						   Helper::setSessionVariable("USERNAME", $username);
 						   Helper::setSessionVariable("IDENTIFIER", $db_userid);
@@ -142,6 +151,10 @@
 			}
 
 			return false;
+		}
+
+		public function insertNewsfeedRecord($query){
+			parent::executeSqlQuery($query);
 		}
 
 		public function getAllUsers(){

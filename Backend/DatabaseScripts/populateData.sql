@@ -33,8 +33,7 @@ INSERT INTO `SCCNetwork`.`User`(`userId`, `username`, `password`, `salt`, `first
                     (4, 'Lauversan', 'medicina', 'test', 'Laura', 'Vergara', 'md_vergara@med.towmhospital.ca', 29, 'Doctor', '90-08-27', 3),
                     (5, 'dballerini', 'mecheng', 'test', 'Daniel', 'Ballerini', 'd_baller@encs.concordia.ca', 24, 'Student', '94-08-30', 2),
 					(6, 'VergaraF', '123456', 'test', 'Fabian', 'Vergara', 'fvergara@egenetec.com', 26, 'Developer', '93-11-23', 1);
-
-                    
+              
 INSERT INTO `SCCNetwork`.`Event`(`eventId`, `event_name`, `eventType_id`) VALUES
 					(1, 'Graduation Ceremony Preparation', 1),
                     (2, 'Flu Vaccination CLSC Campaign', 2),
@@ -66,6 +65,7 @@ INSERT INTO `SCCNetwork`.`event_instance`(`event_instanceId`, `event_id`,
 						(4, 4, 1048, 1048),
 						(5, 5, 1048, 1048),
 						(6, 6, 1048, 1048);
+                        
 
 INSERT INTO `SCCNetwork`.`event_manager`(`event_id`, `manager_id`, `event_instance_id`, `bankingInfo_id`,`assignedAt`) VALUES
 						(1, 1, 1, 1, NOW()),

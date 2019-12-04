@@ -1,15 +1,15 @@
 USE SCCNetwork;
-DROP TRIGGER IF EXISTS after_user_insert_create_derived_userAdmin_participant_or_controller;
+DROP TRIGGER IF EXISTS after_user_insert_create_derived_admin_participant_or_controller;
 DROP TRIGGER IF EXISTS before_deleting_administrator_prevent_deleting_root;
 DROP TRIGGER IF EXISTS before_deleting_user_prevent_deleting_admin_or_root;
 DROP TRIGGER IF EXISTS after_event_type_insert_insert_its_associated_fee;
 DROP TRIGGER IF EXISTS after_manager_insert_create_participant_if_not_existing;
 DROP TRIGGER IF EXISTS before_event_instance_insert_check_input_and_create_default_page;
-DROP TRIGGER IF EXISTS after_event_instance_insert_create_event_participant_and_event_instance_content;
+DROP TRIGGER IF EXISTS after_event_instance_insert_create_event_participant_and_contnt;
 DROP TRIGGER IF EXISTS after_event_manager_insert_create_event_participant;
 
 DELIMITER $$
-CREATE TRIGGER after_user_insert_create_derived_userAdmin_participant_or_controller AFTER INSERT ON `User` FOR EACH ROW
+CREATE TRIGGER after_user_insert_create_derived_admin_participant_or_controller AFTER INSERT ON `User` FOR EACH ROW
 BEGIN
 	DECLARE role_name_in_scc varchar(255);
 
@@ -23,6 +23,8 @@ BEGIN
     ELSEIF (role_name_in_scc like '%control%') THEN
         INSERT INTO `Controller`(`user_id`) VALUES (NEW.userId);
     END IF;
+    
+    INSERT INTO `Newsfeed`(`userId`, `checkedAt`) VALUES (NEW.userId, NULL);
 END;
 $$
 
@@ -116,7 +118,7 @@ BEGIN
 END;
 $$
 
-CREATE TRIGGER after_event_instance_insert_create_event_participant_and_event_instance_content AFTER INSERT ON `event_instance` FOR EACH ROW
+CREATE TRIGGER after_event_instance_insert_create_event_participant_and_contnt AFTER INSERT ON `event_instance` FOR EACH ROW
 BEGIN
 	DECLARE pk_value_of_default_message int;
 

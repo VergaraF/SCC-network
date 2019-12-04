@@ -5,6 +5,9 @@
         public const CONTROLLER_USER_ROLE_ID = 2;
         public const REGULAR_USER_ROLE_ID = 3;
         public const USER_NOT_IN_APP_CACHE = -1;
+        public const ACTIVE_EVENT_ID = 1;
+        public const ARCHIVED_EVENT_ID = 2;
+        public const OTHER_STATUS_EVENT_ID = 3;
 
 		public static function setSessionVariable($sessionVar, $message){
 			$_SESSION[$sessionVar] = $message;

@@ -23,7 +23,7 @@
 
     Helper::displayMessage();
 ?>
-    <div class="col-6">
+    <div class="col-7 no-padding">
         <div class="row main-content">
             <div class="col-12">
                 <h2>Login</h2>

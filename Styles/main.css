@@ -30,6 +30,11 @@
       padding: 0px;
   }
   
+  .no-padding-left-right{
+    padding-left: 0px;
+    padding-right: 0px;
+  }
+  
   .welcome-nav-bar-btn{
       border: none;
       color: white;
