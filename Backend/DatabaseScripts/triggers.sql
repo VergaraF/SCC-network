@@ -9,6 +9,7 @@ DROP TRIGGER IF EXISTS after_event_instance_insert_create_event_participant_and_
 DROP TRIGGER IF EXISTS after_event_manager_insert_create_event_participant;
 DROP TRIGGER IF EXISTS before_group_insert_create_default_page;
 DROP TRIGGER IF EXISTS after_event_group_insert;
+DROP TRIGGER IF EXISTS before_deactivating_user;
 
 DELIMITER $$
 CREATE TRIGGER after_user_insert_create_derived_admin_participant_or_controller AFTER INSERT ON `User` FOR EACH ROW
@@ -176,5 +177,16 @@ BEGIN
     
 END;
 $$
+
+CREATE TRIGGER before_deactivating_user BEFORE INSERT ON `BannedUsers` FOR EACH ROW
+BEGIN
+	DECLARE admin_id int DEFAULT 0;
+    
+    SET adminstrator_id = (SELECT adminId FROM Administrator WHERE user_id = NEW.user_id);
+    
+    IF (administrator_id > 0) THEN 
+		SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'You cannot deactive an admin account/user.';
+    END IF;
+END;
 
 DELIMITER ;

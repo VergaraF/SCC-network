@@ -207,6 +207,13 @@ CREATE TABLE `messages_conversation` (
   PRIMARY KEY (`message_id`, `recipient_id`, `sender_id`)
 );
 
+CREATE TABLE `BannedUsers` (
+	`banId` int PRIMARY KEY AUTO_INCREMENT,
+    `user_id` int NOT NULL,
+    `description` text NOT NULL,
+    `imposedBy_admin_id` int NOT NULL
+);
+
 ALTER TABLE `User` ADD FOREIGN KEY (`roleInSCC_id`) REFERENCES `RoleInSCC` (`id`);
 
 ALTER TABLE `Administrator` ADD FOREIGN KEY (`user_id`) REFERENCES `User` (`userId`);
@@ -216,6 +223,9 @@ ALTER TABLE `Controller` ADD FOREIGN KEY (`user_id`) REFERENCES `User` (`userId`
 ALTER TABLE `Participant` ADD FOREIGN KEY (`user_id`) REFERENCES `User` (`userId`);
 
 ALTER TABLE `UserActionLog` ADD FOREIGN KEY (`user_id`) REFERENCES `User` (`userId`);
+
+ALTER TABLE `BannedUsers` ADD FOREIGN KEY (`user_id`) REFERENCES `User` (`userId`);
+ALTER TABLE `BannedUsers` ADD FOREIGN KEY (`imposedBy_admin_id`) REFERENCES `Administrator` (`adminId`);
 
 ALTER TABLE `Member` ADD FOREIGN KEY (`user_id`) REFERENCES `User` (`userId`);
 

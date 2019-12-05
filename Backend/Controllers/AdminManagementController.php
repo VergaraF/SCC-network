@@ -19,6 +19,9 @@ class AdminManagementController extends UserController{
         parent::executeSqlQuery($updateQuery);
     }
 
+    public function getUserActions($user_id){
+        return parent::getResultSetAsArray("SELECT actionPerformed, actionPerformedAt FROM UserActionLog WHERE user_id = '$user_id'");
+    }
     //this function is used by the admin to deactivate other users of the site
     public function deleteUser($user_id){
        // $allTheConversations = Conversation::displayConversations($user_id);
@@ -42,24 +45,33 @@ class AdminManagementController extends UserController{
         // header("location: adminPanel.php?action=user");
     }
 
-    //this function is used to ban a user from the site
-    public function banUser($user_id, $message){
-        // $rs = parent::checkBannedUsers($user_id);
-        // if(count($rs) == 0){
-        //     $description = Database::getEscaped($message);
-        //     $query = "INSERT INTO bannedUsers(banId, user_id, description, from_ ,to_) VALUES(DEFAULT, '$user_id', '$description', NOW() , ADDDATE(NOW(), INTERVAL 31 DAY))";
-        //     Database::executeSqlQuery($query);
-        //     header("location: adminPanel.php?action=user");
-        // }else{
-        //     echo "this user is already banned from this site";
-        // }
+    public function banUser($user_id, $message, $banned_by_id){
+        $rs = parent::checkBannedUsers($user_id);
+        $temp = parent::getResultSetAsArray("SELECT adminId FROM Administrator WHERE user_id = '$banned_by_id'");
+
+        $tempUserToBanId = parent::getResultSetAsArray("SELECT adminId FROM Administrator WHERE user_id = '$user_id'");
+
+        if (count($tempUserToBanId) > 0){
+            echo "Error : You cannot deactivate the account of an adminstrator";
+            return;
+        }
+
+        $adminId = 1;
+        if (count($temp) > 0){
+            $adminId = $temp[0]['adminId'];
+        }
+        if(count($rs) == 0){
+            $description = parent::getEscaped($message);
+            $query = "INSERT INTO BannedUsers(user_id, description, imposedBy_admin_id) VALUES('$user_id', '$description', '$adminId')";
+            parent::executeSqlQuery($query);
+        }else{
+            echo "Error : This user is already deactivated from this site";
+        }
     }
 
-    //this function is used to un-ban the banned user
-    public function unBanUser($user_id){
-        $query = "DELETE FROM bannedUsers WHERE user_id = '$user_id'";
-        DatabaseController::executeSqlQuery($query);
-        header("location: adminPanel.php?action=user");
+    public function unbanUser($user_id){
+        $query = "DELETE FROM BannedUsers WHERE user_id = '$user_id'";
+        return parent::executeSqlQuery($query);
     }
 }
 ?>

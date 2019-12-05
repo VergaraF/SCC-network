@@ -239,11 +239,14 @@
 				else{
 					echo "Your old password is incorrect! Please retype it";
 				}
-
 			}
 			else{
 				echo "Confirmation failed";
 			}
+		}
+
+		public function checkBannedUsers($user_id){
+			return parent::getResultSetAsArray("SELECT * FROM BannedUsers WHERE user_id = '$user_id'");
 		}
 	}
 ?>
