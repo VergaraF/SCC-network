@@ -20,6 +20,7 @@ if (!$userController->isLoggedIn()){
     <?php
 }
 else {
+    LogController::getInstance()->LogAction($_SESSION['IDENTIFIER'], "User ". $_SESSION['USERNAME'] . " is in the index, checking his newsfeed");
     $events = ContentController::getInstance()->getEventsWhereUserIsParticipant($_SESSION['IDENTIFIER']);
     if (count($events) > 0){
         $contents = ContentController::getInstance()->getNewContentForUser($_SESSION['IDENTIFIER']);

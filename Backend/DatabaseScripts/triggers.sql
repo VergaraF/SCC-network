@@ -7,6 +7,8 @@ DROP TRIGGER IF EXISTS after_manager_insert_create_participant_if_not_existing;
 DROP TRIGGER IF EXISTS before_event_instance_insert_check_input_and_create_default_page;
 DROP TRIGGER IF EXISTS after_event_instance_insert_create_event_participant_and_contnt;
 DROP TRIGGER IF EXISTS after_event_manager_insert_create_event_participant;
+DROP TRIGGER IF EXISTS before_group_insert_create_default_page;
+DROP TRIGGER IF EXISTS after_event_group_insert;
 
 DELIMITER $$
 CREATE TRIGGER after_user_insert_create_derived_admin_participant_or_controller AFTER INSERT ON `User` FOR EACH ROW
@@ -20,6 +22,7 @@ BEGIN
     IF( role_name_in_scc like '%admin%') THEN
         INSERT INTO `Administrator`(`user_id`) VALUES (NEW.userId);
         INSERT INTO `Participant`(`user_id`) VALUES (NEW.userId);
+        INSERT INTO `Member` (`user_id`) VALUEs (NEW.userId);
     ELSEIF (role_name_in_scc like '%control%') THEN
         INSERT INTO `Controller`(`user_id`) VALUES (NEW.userId);
     END IF;
@@ -83,6 +86,27 @@ BEGIN
 END;
 $$
 
+CREATE TRIGGER before_group_insert_create_default_page BEFORE INSERT ON `Group` FOR EACH ROW
+BEGIN
+	DECLARE DEFAULT_PAGE_CONTENT text;
+    
+	SET default_page_content = ( SELECT content 
+								FROM Page
+								LIMIT 1);
+                                
+	INSERT INTO `Page`(`content`) VALUES (default_page_content);
+    SET NEW.group_page_id = (SELECT LAST_INSERT_ID());
+END;
+$$
+
+CREATE TRIGGER after_event_group_insert AFTER INSERT ON `event_groups` FOR EACH ROW
+BEGIN
+	INSERT INTO `group_member`(`event_group_id`, `member_id`) VALUES (NEW.event_group_id, 1);
+    INSERT INTO `group_content`(`event_group_id`, `event_group_content_id`, `event_group_content_author_member_id`)
+    VALUES (NEW.event_group_id, 2, 1);
+END;
+$$
+	
 CREATE TRIGGER before_event_instance_insert_check_input_and_create_default_page BEFORE INSERT ON `event_instance` FOR EACH ROW
 BEGIN
 	DECLARE	default_storage_limit int;

@@ -10,7 +10,7 @@ if (!$userController->isLoggedIn()){
 ?>
 <html>
 <head>
-  <title>The SCC-Network</title>
+  <title>The SCC-Network - My Events</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" type="text/css" href="./Styles/main.css">
   <link rel="stylesheet" type="text/css" href="./Styles/joiningSite.css">
@@ -24,6 +24,8 @@ if (!$userController->isLoggedIn()){
 <body>
 <div class="col-8 no-padding">
 <?php
+LogController::getInstance()->LogAction($_SESSION['IDENTIFIER'], "User ". $_SESSION['USERNAME'] . "viewing his 'My Events' page.");
+
 $events = ContentController::getInstance()->getEventsWhereUserIsParticipant($_SESSION['IDENTIFIER']);
     if (count($events) > 0){
         ?> 
@@ -37,15 +39,15 @@ $events = ContentController::getInstance()->getEventsWhereUserIsParticipant($_SE
             $eventType = $eventInfo[0]['name'];
 
             if (strcmp($event['eventStatus_id'], Helper::ACTIVE_EVENT_ID) === 0){
-                echo "<div class='col-12 active-event event-box'>"; 
+                echo "<div class='col-12 active-event event-box no-padding'>"; 
             }
             else if (strcmp($event['eventStatus_id'], Helper::ARCHIVED_EVENT_ID) === 0){
-                echo "<div class='col-12 archived-event event-box'>";
+                echo "<div class='col-12 archived-event event-box no-padding'>";
             }
             else{
-                echo "<div class='col-12 undefined-event event-box'>";
+                echo "<div class='col-12 undefined-event event-box no-padding'>";
             }
-            echo "<div class='row'>";
+            echo "<div class='row no-padding'>";
             echo "<div class='col-9'>" . $eventName . "</div>";
             echo "<div class='col-3'>" . "Status : " . $statusOfEvent[0]['name']  . "</div>";
             echo "<div class='col-8'> Participants : N</div>";

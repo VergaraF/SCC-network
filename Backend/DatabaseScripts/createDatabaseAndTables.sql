@@ -24,6 +24,13 @@ CREATE TABLE `User` (
   `joinedAt` datetime DEFAULT CURRENT_TIMESTAMP
 );
 
+CREATE TABLE `UserActionLog` (
+	`id` int PRIMARY KEY AUTO_INCREMENT,
+    `user_id` int NOT NULL,
+    `actionPerformed` text,
+    `actionPerformedAt` datetime DEFAULT CURRENT_TIMESTAMP
+);
+
 CREATE TABLE `Newsfeed` (
 	`newsFeedId` int PRIMARY KEY AUTO_INCREMENT,
     `userId` int UNIQUE,
@@ -208,6 +215,8 @@ ALTER TABLE `Controller` ADD FOREIGN KEY (`user_id`) REFERENCES `User` (`userId`
 
 ALTER TABLE `Participant` ADD FOREIGN KEY (`user_id`) REFERENCES `User` (`userId`);
 
+ALTER TABLE `UserActionLog` ADD FOREIGN KEY (`user_id`) REFERENCES `User` (`userId`);
+
 ALTER TABLE `Member` ADD FOREIGN KEY (`user_id`) REFERENCES `User` (`userId`);
 
 ALTER TABLE `Manager` ADD FOREIGN KEY (`user_id`) REFERENCES `User` (`userId`);
@@ -252,8 +261,8 @@ ALTER TABLE `Fee` ADD FOREIGN KEY (`eventType_id`) REFERENCES `EventType` (`id`)
 
 ALTER TABLE `Bill` ADD FOREIGN KEY (`pay_by_manager_id`) REFERENCES `event_manager` (`manager_id`);
 
-ALTER TABLE `messages_conversation` ADD FOREIGN KEY (`message_id`) REFERENCES `Message` (`messageId`);
-ALTER TABLE `messages_conversation` ADD FOREIGN KEY (`recipient_id`) REFERENCES `Participant` (`participantId`);
-ALTER TABLE `messages_conversation` ADD FOREIGN KEY (`sender_id`) REFERENCES `Participant` (`participantId`);
+ALTER TABLE `messages_conversation` ADD FOREIGN KEY (`message_id`) REFERENCES `Message` (`messageId`) ON DELETE CASCADE;
+ALTER TABLE `messages_conversation` ADD FOREIGN KEY (`recipient_id`) REFERENCES `Participant` (`participantId`) ON DELETE CASCADE;
+ALTER TABLE `messages_conversation` ADD FOREIGN KEY (`sender_id`) REFERENCES `Participant` (`participantId`) ON DELETE CASCADE;
 
 INSERT INTO `SCCSystemStatus`(id, IsDatabaseCreated, IsDatabasePopulated) VALUES('1', true, false);

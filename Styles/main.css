@@ -50,9 +50,44 @@
       margin-right: 10px;
   }
 
-  .welcome-nav-bar-btn:hover{
+  .action-btn{
+      border: none;
+      color: white;
+      background-color: rgb(41, 41, 41);
+      padding: 10px;
+      text-align: center;
+      text-decoration: none;
+      display: block;
+      font-size: 16px;
+      cursor: pointer;  
+      width: 100%;
+  }
+
+  .action-btn-selected {
+      border: none;
+      padding: 10px;
+      text-align: center;
+      text-decoration: none;
+      display: block;
+      font-size: 16px;
+      cursor: pointer;  
+      width: 100%;
       background-color: grey;
       color: black;
+  }
+
+  .welcome-nav-bar-btn:hover, .action-btn:hover{
+      background-color: grey;
+      color: black;
+  }
+
+  .no-upper-padding{
+    padding-top: 0px;
+  }
+
+  .action-box{
+    border: 1px solid black;
+    height: 100%;
   }
 
   .header {

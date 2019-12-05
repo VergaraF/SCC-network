@@ -23,8 +23,9 @@ INSERT INTO `SCCNetwork`.`Page`(`pageId`, `content`) VALUES
 INSERT INTO `SCCNetwork`.`Content`(`contentId`, `contentType`, `value`) VALUES 
 						(1, 'Comment', 'Welcome to your new event! You may want to start by making a payment for the associated event fee, if applicable. 
 										Please note that there is a grace period of seven days from the creation date of the group to confirm your payment.
-                                        After your grace period has passed, your event will be ''Active'' but there will be some restrictions until a payment is received.');
-                                        
+                                        After your grace period has passed, your event will be ''Active'' but there will be some restrictions until a payment is received.'),
+						(2, 'Comment', 'Welcome to your new group!');
+ 
 INSERT INTO `SCCNetwork`.`User`(`userId`, `username`, `password`, `salt`, `firstname`, `lastname`, `email`, 
 								`age`, `profession`, `dateOfBirth`, `roleInSCC_id`) VALUES 
                     (1, 'root', 'root', 'test', 'Fabian', 'Vergara', 'root@scc.network', 26, 'Developer', '93-11-23', 1),
@@ -75,5 +76,19 @@ INSERT INTO `SCCNetwork`.`event_manager`(`event_id`, `manager_id`, `event_instan
                         (5, 5, 5, 5, NOW()),
 						(6, 1, 6, 1, NOW());
 
+INSERT INTO `SCCNetwork`.`Group`(`id`, `owner_participant_id`) VALUES
+						(1, 1),
+                        (2, 1),
+                        (3, 1),
+                        (4, 1),
+                        (5, 1);
+                        
+INSERT INTO `SCCNetwork`.`event_groups`(`event_instance_id`, `event_group_id`) VALUES
+						(1, 1),
+                        (2, 2),
+                        (3, 3),
+                        (4, 4),
+                        (5, 5);
+                        	
 UPDATE `SCCNetwork`.`SCCSystemStatus` SET IsDataBasePopulated = true
 WHERE id = '1';

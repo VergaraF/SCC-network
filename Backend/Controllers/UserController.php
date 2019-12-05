@@ -37,6 +37,8 @@
 						$u_id = $this->getUserIdFromDatabase($username);
 						$newsfeedQuery = "INSERT INTO Newsfeed (userId) VALUES('$u_id')";
 						$this->insertNewsfeedRecord($newsfeedQuery);
+						LogController::getInstance()->LogAction($u_id, "Sign up.");
+
 					}
 					parent::closeConnection();
 					Helper::redirectToLocation("signup.php?redirect=login.php");
@@ -82,6 +84,7 @@
 							Helper::setSessionVariable("NEWS_IDENTIFIER", $newsFeedId[0]['newsFeedId']);
 						   }
 
+						   LogController::getInstance()->LogAction($db_userid, "logged in with correct credentials.");
 						   Helper::setSessionVariable("USERNAME", $username);
 						   Helper::setSessionVariable("IDENTIFIER", $db_userid);
 						   Helper::redirectToLocation("login.php?redirect=index.php");
@@ -112,6 +115,20 @@
 			return Helper::USER_NOT_IN_APP_CACHE;
 		}
 
+		public function getAllRolesInSCC(){
+			return parent::getResultSetAsArray("SELECT * FROM RoleInSCC");
+		}
+
+		public function getRoleInSCCName($roleId){
+			$query = "SELECT role_name FROM RoleInSCC WHERE id = '$roleId'";
+
+			$array = parent::getResultSetAsArray($query);
+			if (count($array) > 0){
+				return $array[0]['role_name'];
+			}
+
+			return "unknown";
+		}
 		public function getUserRoleInSystem($username){
 			$roleArray = $this->getSpecificUser($username);
 			$roleId = "";
@@ -161,12 +178,16 @@
 			return parent::getResultSetAsArray("SELECT * FROM User");
 		}
 
+		public function getUserById($userId){
+			return parent::getResultSetAsArray("SELECT * FROM User WHERE userId = '$userId'");
+		}
+
 		public function getUsersProfileInfo(){
 			return parent::getResultSetAsArray("SELECT * FROM User WHERE username = '" . $_SESSION['USERNAME'] . "'");
 		}
 
 		public function updateProfile($post){
-			$user_id 	 = $this->getUserId();
+			$user_id 	 = parent::getEscaped($post['userId']);
 			$first_name  = parent::getEscaped($post['firstname']);
 			$last_name   = parent::getEscaped($post['lastname']);
 			$email 		 = parent::getEscaped($post['email']);

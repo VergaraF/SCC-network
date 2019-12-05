@@ -1,5 +1,6 @@
 <?php
 session_start();
+LogController::getInstance()->LogAction($_SESSION['IDENTIFIER'], "User ". $_SESSION['USERNAME'] . " logged out.");
 unset($_SESSION['USERNAME']);
 unset($_SESSION['IDENTIFIER']);
 session_destroy();

@@ -7,7 +7,7 @@
                 $userRole = $userController->getUserRoleInSystem($_SESSION['USERNAME']);                
         ?>
                 <li class="btn" onClick="window.location.href='myEventsPage.php'">My events</li>
-                <li class="btn">My groups</li>
+                <li class="btn" onClick="window.location.href='myGroupsPage.php'">My groups</li>
                 <?php
                     if(strcmp($userRole, Helper::ADMIN_USER_ROLE_ID) === 0){
                 ?>
