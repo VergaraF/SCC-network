@@ -13,14 +13,14 @@ CREATE TABLE `User` (
   `userId` int PRIMARY KEY AUTO_INCREMENT,
   `username` varchar(255) UNIQUE NOT NULL,
   `password` varchar(255) NOT NULL,
-  `salt` VARCHAR(255) NOT NULL,
+  `salt` VARCHAR(255) DEFAULT 'test',
   `firstname` varchar(255),
   `lastname` varchar(255),
-  `email` varchar(255) UNIQUE NOT NULL,
+  `email` varchar(255),
   `age` int,
   `profession` varchar(255),
   `dateOfBirth` date,
-  `roleInSCC_id` int,
+  `roleInSCC_id` int DEFAULT 3,
   `joinedAt` datetime DEFAULT CURRENT_TIMESTAMP
 );
 
@@ -73,12 +73,13 @@ CREATE TABLE `Manager` (
 CREATE TABLE `Event` (
   `eventId` int PRIMARY KEY AUTO_INCREMENT,
   `event_name` varchar(255),
+  `event_description` text DEFAULT 'none',
   `eventType_id` int
 );
 
 CREATE TABLE `Page` (
   `pageId` int PRIMARY KEY AUTO_INCREMENT,
-  `content` text
+  `content` text DEFAULT 'eventPage.php'
 );
 
 CREATE TABLE `EventStatus` (
@@ -153,6 +154,7 @@ CREATE TABLE `event_instance` (
   `page_id` int DEFAULT 1,
   `bill_id` int
 );
+
 
 CREATE TABLE `event_participants` (
   `event_instance_id` int,

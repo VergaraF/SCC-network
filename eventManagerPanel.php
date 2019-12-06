@@ -19,7 +19,6 @@ if (!$userController->isLoggedIn()){
 <?php 
   include('./Predefined/header.php'); 
   include('./Predefined/sideMenu.php'); 
-
 ?>
 <body>
 <div class="col-8 no-padding">
@@ -38,14 +37,22 @@ $events = ContentController::getInstance()->getEventsWhereUserIsManager($_SESSIO
             $eventName = $eventInfo[0]['event_name'];
             $eventType = $eventInfo[0]['name'];
 
+            $managerUserIdForEvent = $_SESSION['IDENTIFIER'];
+            echo "<form name='displayEvent' method='POST' action='eventPage.php'>";
+            ?>
+            <input name="ev_in_id" type="hidden" value="<?php echo $event['event_instanceId']; ?>" />
+            <input name="ev_id" type="hidden" value="<?php echo $event['event_id']; ?>" />
+            <input name="ev_st" type="hidden" value="<?php echo $event['eventStatus_id']; ?>" />
+            <input name="ev_ma_u_id" type="hidden" value="<?php echo $managerUserIdForEvent; ?>" />
+            <?php
             if (strcmp($event['eventStatus_id'], Helper::ACTIVE_EVENT_ID) === 0){
-                echo "<div class='col-12 active-event event-box no-padding'>"; 
+                echo "<div class='col-12 active-event event-box no-padding' onclick='this.parentNode.submit()'>"; 
             }
             else if (strcmp($event['eventStatus_id'], Helper::ARCHIVED_EVENT_ID) === 0){
-                echo "<div class='col-12 archived-event event-box no-padding'>";
+                echo "<div class='col-12 archived-event event-box no-padding' onclick='this.parentNode.submit()'>";
             }
             else{
-                echo "<div class='col-12 undefined-event event-box no-padding'>";
+                echo "<div class='col-12 undefined-event event-box no-padding' onclick='this.parentNode.submit()'>";
             }
             echo "<div class='row no-padding'>";
             echo "<div class='col-9'>" . $eventName . "</div>";
@@ -53,10 +60,12 @@ $events = ContentController::getInstance()->getEventsWhereUserIsManager($_SESSIO
             echo "<div class='col-8'> Expires on " . $event['lifetime']   . "</div>";
             echo "<div class='col-4'>" . "Event type : " . $eventType . "</div>"; 
             echo "</div>
-                </div>";
+                </div></form>";
         }
         ?>
+        
         </div>
+
 </div>
         <?php
     }

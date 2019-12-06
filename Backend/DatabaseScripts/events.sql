@@ -4,7 +4,7 @@ DROP EVENT IF EXISTS marked_expired_events_as_deleted_after_seven_years_period;
 
 DELIMITER $$
 CREATE EVENT deactivate_expired_events_daily
-	ON SCHEDULE AT CURRENT_TIMESTAMP + INTERVAL 24 HOUR
+	ON SCHEDULE AT CURRENT_TIMESTAMP + INTERVAL 1 HOUR
     DO
 		BEGIN
 			DECLARE currentTimeStamp datetime DEFAULT CURRENT_TIMESTAMP;

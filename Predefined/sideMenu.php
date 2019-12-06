@@ -3,8 +3,8 @@
     <ul>
         <li class="btn" onClick="window.location.href='index.php'">Home page</li>
         <?php
-            if ($userController->isLoggedIn()){
-                $userRole = $userController->getUserRoleInSystem($_SESSION['USERNAME']);                
+            if ($userController->isLoggedIn() && !$userController->isUserDeactivated($_SESSION['IDENTIFIER'])){
+                $userRole = $userController->getUserRoleInSystem($_SESSION['USERNAME']);             
         ?>
                 <li class="btn" onClick="window.location.href='myEventsPage.php'">My events</li>
                 <li class="btn" onClick="window.location.href='myGroupsPage.php'">My groups</li>

@@ -37,13 +37,13 @@ INSERT INTO `SCCNetwork`.`User`(`userId`, `username`, `password`, `salt`, `first
 					(6, 'VergaraF', '123456', 'test', 'Fabian', 'Vergara', 'fvergara@egenetec.com', 26, 'Developer', '93-11-23', 1);
               
 
-INSERT INTO `SCCNetwork`.`Event`(`eventId`, `event_name`, `eventType_id`) VALUES
-					(1, 'Graduation Ceremony Preparation', 1),
-                    (2, 'Flu Vaccination CLSC Campaign', 2),
-                    (3, 'Vergara Family Mid-century Party', 1),
+INSERT INTO `SCCNetwork`.`Event`(`eventId`, `event_name`, `event_description`, `eventType_id`) VALUES
+					(1, 'Graduation Ceremony Preparation', 'Come attend hour graduation ceremony preparion. Everyone is welcome.',1),
+                    (2, 'Flu Vaccination CLSC Campaign', 'Winter is here and you should prepare your inmune system by participating in this journey of vaccination', 2),
+                    (3, 'Vergara Family Mid-century Party', 'Because being 50 years old is a lot of time, come have fun',1),
                     (4, 'Townhall Public Garage Sale', 3),
-                    (5, 'Rock-al-Parque Homeless Fundraising', 2),
-                    (6, 'Database Architecture Information Session', 3);
+                    (5, 'Rock-al-Parque Homeless Fundraising', 'We area attempting to fundraise funds for people in the streets and children. Come see your favorita rockstars and contribugte to the cause!',2),
+                    (6, 'Database Architecture Information Session', 'Db, architecure, info, session, come and learn to master databases',3);
                     
 INSERT INTO `SCCNetwork`.`Manager`(`managerId`, `user_id`, `address`, `phone_number`) VALUES 
 						(1, 1, '2460 Rue de la Savane. H4F-1Y4. Montreal, QC.', '(514) 323-2354'),

@@ -280,8 +280,21 @@
 			}
 		}
 
-		public function checkBannedUsers($user_id){
-			return parent::getResultSetAsArray("SELECT * FROM BannedUsers WHERE user_id = '$user_id'");
+		public function isUserDeactivated($user_id){
+			$result = $this->getDeactivatedUser($user_id);
+			return (count($result) > 0);
+		}
+
+		public function getDeactivatedUser($user_id){
+			return  parent::getResultSetAsArray("SELECT * FROM BannedUsers WHERE user_id = '$user_id'");
+		}
+
+		public function getUserIdAndNameFromParticipantId($participantId){
+			$query = "SELECT pa.user_id, us.username FROM Participant AS pa
+					  INNER JOIN User AS us ON pa.user_id = us.userId
+					  WHERE participantId = '$participantId'";
+
+			return parent::getResultSetAsArray($query);
 		}
 	}
 ?>

@@ -73,6 +73,15 @@ class ContentController{
         $this->db_controller->executeSqlQuery("UPDATE Newsfeed SET checkedAt = NOW() WHERE newsFeedId = '$newsFeedId'");
         return $contentResultAsArray;        
     }
+
+    public function getContentForEventInstance($event_instance_id){
+        $query = "SELECT ev_in_co.event_instance_id, ev_in_co.event_instance_content_author_participant_id, co.contentType, co.value, co.postedAt
+                  FROM event_instance_content AS ev_in_co
+                  INNER JOIN  content AS co ON co.contentId = ev_in_co.event_instance_contentId
+                  WHERE ev_in_co.event_instance_id = '$event_instance_id'";
+
+        return $this->db_controller->getResultSetAsArray($query);        
+    }
  
     public function getEventInstanceStatus($eventStatus_id){
         $query = "SELECT DISTINCT es.eventStatusId, es.name FROM EventStatus AS es
@@ -99,7 +108,22 @@ class ContentController{
         INNER JOIN EventType AS et ON e.eventType_id = et.id
         WHERE e.eventId = '$eventId'";
 
-    return $this->db_controller->getResultSetAsArray($query);
+        return $this->db_controller->getResultSetAsArray($query);
+    }
+
+    public function getParticipantIdsOfEvent($event_instance_id){
+        $query = "SELECT * FROM event_participants where event_instance_id = '$event_instance_id'";
+
+        return $this->db_controller->getResultSetAsArray($query);
+    }
+
+    public function getManagerUserIdOfEventInstance($event_instance_id){
+        $query = "SELECT us.userId FROM User AS us
+                  INNER JOIN Manager AS ma ON ma.user_id = us.userId
+                  INNER JOIN event_manager AS ev_ma ON ev_ma.manager_id = ma.managerId
+                 WHERE event_instance_id = '$event_instance_id'";
+
+        return $this->db_controller->getResultSetAsArray($query);    
     }
 }
 ?>

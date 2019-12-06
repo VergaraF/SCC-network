@@ -71,32 +71,33 @@ $mailController = new MailController();
                             ?>
                         <form name='deleteMessage' method='POST' action=''>
                             <tr>
-                                <td> <?php echo "<div class='message-box message-box-in-chat chat-box-message'><b>" . $userController->getUsername($messages[$row]['sender_user_id']) . "</b> : " . $messages[$row]['content']; ?> </div></td>
-                                <input type="hidden" name="cr_id_toDeleteMessage" value="<?php echo $messages[$row]['messageId'] ?>">
-                                <td><input id='del' type='submit' name='deleteMess' value='X'></td>
-                            </tr>
-                        </form>
-                    <?php } ?>
-                </table>
-                <form name='sendMessage' method='POST' action=''>
-                        <div id="sendMess">
-                            <input type="hidden" name="c_id_toSendMessage" value="<?php echo $_POST['c_id']; ?>">
-                            <textarea id="messageInput" class="input-mail" name="message"></textarea>
-                            <input name="sendMessage" class="send-btn" type="submit" value="Send">
-                        </div>
-                    </form>
-            <?php
-            } elseif (isset($_POST['sendMessage'])) {
-                $mailController->sendMessage($_POST['c_id_toSendMessage'], $_POST['message'], $user_id);
-            } elseif (isset($_POST['deleteMess'])) {
-                $mailController->deleteMessage($_POST['cr_id_toDeleteMessage']);
-            } elseif (isset($_POST['deleteConvo'])) {
-                $mailController->deleteConversation($_POST['c_id']);
-                header("location: messenger.php");
-            }
-            ?>
+                                <td> <?php echo "<div class='message-box message-box-in-chat chat-box-message'><b>" . $userController->getUsername($messages[$row]['sender_user_id']) . "</b> : " . $messages[$row]['content']; ?> </div>
+        </td>
+        <input type="hidden" name="cr_id_toDeleteMessage" value="<?php echo $messages[$row]['messageId'] ?>">
+        <td><input id='del' type='submit' name='deleteMess' value='X'></td>
+        </tr>
+        </form>
+    <?php } ?>
+    </table>
+    <form name='sendMessage' method='POST' action=''>
+        <div id="sendMess">
+            <input type="hidden" name="c_id_toSendMessage" value="<?php echo $_POST['c_id']; ?>">
+            <textarea id="messageInput" class="input-mail" name="message"></textarea>
+            <input name="sendMessage" class="send-btn" type="submit" value="Send">
         </div>
+    </form>
+<?php
+} elseif (isset($_POST['sendMessage'])) {
+    $mailController->sendMessage($_POST['c_id_toSendMessage'], $_POST['message'], $user_id);
+} elseif (isset($_POST['deleteMess'])) {
+    $mailController->deleteMessage($_POST['cr_id_toDeleteMessage']);
+} elseif (isset($_POST['deleteConvo'])) {
+    $mailController->deleteConversation($_POST['c_id']);
+    header("location: messenger.php");
+}
+?>
     </div>
+</div>
 </div>
 
 </body>

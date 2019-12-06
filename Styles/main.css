@@ -35,7 +35,7 @@
     padding-right: 0px;
   }
   
-  .welcome-nav-bar-btn{
+  .welcome-nav-bar-btn, .go-back-btn{
       border: none;
       color: white;
       background-color: black;
@@ -61,6 +61,7 @@
       font-size: 16px;
       cursor: pointer;  
       width: 100%;
+      margin-bottom: 5px;
   }
 
   .action-btn-selected {
@@ -76,7 +77,7 @@
       color: black;
   }
 
-  .welcome-nav-bar-btn:hover, .action-btn:hover{
+  .welcome-nav-bar-btn:hover, .action-btn:hover, .go-back-btn:hover{
       background-color: grey;
       color: black;
   }

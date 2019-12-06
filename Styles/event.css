@@ -3,7 +3,7 @@
 }
 
 .archived-event{
-    background-color:red;
+    background-color:rgb(235, 114, 114);
 }
 
 .undefined-event{
@@ -15,12 +15,46 @@
     height:150px;
     margin-bottom: 5px;
     border-radius:10px;
+    border: 1px solid #ffdddd;
+    cursor: pointer;  
 }
 
 .event-box{
     margin-bottom: 10px;
     height: 150px;
     border-radius:10px;
+    border: 1px solid #ffdddd;
+    cursor: pointer;  
 }
 
+.invite-btn, .see-group-btn, .create-group-btn, .pay-bill-btn, .see-participants-btn {
+    background: #26af26;
+    border: #26af26 1px solid;	
+    border-radius: 4px;
+    color: #FFF;
+    width: 100%;
+    display: block;
+    height: 40px;
+    margin: 15px 0px;
+    padding: 10px 50px;
+    cursor: pointer;
+    font-size: 15px;
+}
+
+#response {
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 2px;
+    display:none;
+}
+
+.success {
+    background: #c7efd9;
+    border: #bbe2cd 1px solid;
+}
+
+.error {
+    background: #fbcfcf;
+    border: #f3c6c7 1px solid;
+}
 

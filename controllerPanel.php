@@ -56,11 +56,11 @@ include('./Predefined/sideMenu.php');
                         echo "<script type='text/javascript'> removeButtonFromClassOnClicked('$actionToPerform'); </script>";
                         switch ($actionToPerform) {
                             case 'manageDefaultFees': {
-                                    LogController::getInstance()->LogAction($_SESSION['IDENTIFIER'], "User " . $_SESSION['USERNAME'] . " is managing feed in the controller panel");
+                                    LogController::getInstance()->LogAction($_SESSION['IDENTIFIER'], "User " . $_SESSION['USERNAME'] . " is managing default fee in the controller panel");
                                     break;
                                 }
                             case 'manageEventsFees': {
-                                    LogController::getInstance()->LogAction($_SESSION['IDENTIFIER'], "User " . $_SESSION['USERNAME'] . " is managing feed in the controller panel");
+                                    LogController::getInstance()->LogAction($_SESSION['IDENTIFIER'], "User " . $_SESSION['USERNAME'] . " is managing events fee in the controller panel");
                                     include('./Backend/Managers/eventsManagement.php');
                                 break;
                                 }
