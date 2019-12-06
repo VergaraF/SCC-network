@@ -73,7 +73,7 @@ CREATE TABLE `Manager` (
 CREATE TABLE `Event` (
   `eventId` int PRIMARY KEY AUTO_INCREMENT,
   `event_name` varchar(255),
-  `event_description` text DEFAULT 'none',
+  `event_description` text,
   `eventType_id` int
 );
 
