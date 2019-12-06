@@ -16,6 +16,20 @@ class ContentController{
         return self::$instance;
     }
 
+    public function getEventsWhereUserIsManager($userId){
+        $query = "SELECT ev_in.event_instanceId, ev_in.event_id, ev_in.eventStatus_id, ev_in.page_id, ev_in.lifetime, ev_ma.manager_id  
+                 FROM event_instance AS ev_in 
+                 INNER JOIN event_manager AS ev_ma ON ev_in.event_instanceId = ev_ma.event_instance_id
+                 INNER JOIN Manager AS ma ON ev_ma.manager_id = ma.managerId
+                 WHERE ma.user_id = '$userId'";
+
+        $resultAsArray = $this->db_controller->getResultSetAsArray($query);
+        if (count($resultAsArray) > 0 && !isset($_SESSION["PARTICIPANT_IDENTIFIER"])){
+            $_SESSION["MANAGER"] = $resultAsArray[0]["manager_id"];
+        }
+        return $resultAsArray;
+    }
+
     public function getEventsWhereUserIsParticipant($userId){
         $query = "SELECT ev_in.event_instanceId, ev_in.event_id, ev_in.eventStatus_id, ev_in.page_id, ev_in.lifetime, ev_pa.event_participant_id  
                   FROM event_instance AS ev_in 
@@ -67,6 +81,18 @@ class ContentController{
 
         return $this->db_controller->getResultSetAsArray($query);
     }
+
+    public function getAllEvents(){
+        $query =  "SELECT ev.event_name, ev_in.*, ev_ma.manager_id, ma.user_id, bankingInfo_id, us.username AS 'adminUsername'
+                   FROM event_instance AS ev_in    
+                   INNER JOIN event_manager AS ev_ma ON ev_in.event_instanceId = ev_ma.event_instance_id         
+                   INNER JOIN Manager as ma ON ev_ma.manager_id = ma.managerId         
+                   INNER JOIN Event AS ev ON ev_in.event_id = ev.eventId
+                   LEFT JOIN User AS us ON ma.user_id = us.userId";
+
+        return $this->db_controller->getResultSetAsArray($query);
+    }
+
 
     public function getEventInfo($eventId){
         $query = "SELECT e.event_name, et.name FROM Event AS e

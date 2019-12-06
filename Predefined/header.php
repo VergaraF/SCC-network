@@ -16,7 +16,7 @@
                 <button class="welcome-nav-bar-btn" onClick="window.location.href='profile.php'">Profile</button>
             </div>
             <div class="col-1 no-padding">
-                <button class="welcome-nav-bar-btn" onClick="window.location.href='messages.php'">Messages</button>
+                <button class="welcome-nav-bar-btn" onClick="window.location.href='mail.php'">Messages</button>
             </div>
             <div class="col-1 no-padding">
                 <button class="welcome-nav-bar-btn" onClick="window.location.href='logout.php'">Logout</button>

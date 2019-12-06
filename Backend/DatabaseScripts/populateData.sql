@@ -11,7 +11,8 @@ INSERT INTO `SCCNetwork`.`EventType`(`id`, `name`) VALUES
 INSERT INTO `SCCNetwork`.`EventStatus`(`eventStatusId`, `name`) VALUES
 						  (1, 'Active'), 
 						  (2, 'Archived'),
-                          (3, 'Other');
+                          (3, 'Other'),
+                          (4, 'Deleted');
                           
 INSERT INTO `SCCNetwork`.`DefaultEventConfiguration`(`defaultEventConfigurationId`, `defaultBandwidthLimitInMB`, 
 													 `defaultStorageLimitInMb`, `defaultInitialActiveEventConfigurationTimeInHours`) VALUES 
@@ -35,6 +36,7 @@ INSERT INTO `SCCNetwork`.`User`(`userId`, `username`, `password`, `salt`, `first
                     (5, 'dballerini', 'mecheng', 'test', 'Daniel', 'Ballerini', 'd_baller@encs.concordia.ca', 24, 'Student', '94-08-30', 2),
 					(6, 'VergaraF', '123456', 'test', 'Fabian', 'Vergara', 'fvergara@egenetec.com', 26, 'Developer', '93-11-23', 1);
               
+
 INSERT INTO `SCCNetwork`.`Event`(`eventId`, `event_name`, `eventType_id`) VALUES
 					(1, 'Graduation Ceremony Preparation', 1),
                     (2, 'Flu Vaccination CLSC Campaign', 2),

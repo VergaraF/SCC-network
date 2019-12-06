@@ -1,0 +1,88 @@
+.error {
+    color:#FF0000;
+}
+
+.chat-connection-ack{
+    color: #26af26;
+}
+
+.message-box {
+    border-bottom-left-radius: 4px;
+    border-bottom-right-radius: 4px;
+}
+
+.send-btn {
+    background: #26af26;
+    border: #26af26 1px solid;	
+    border-radius: 4px;
+    color: #FFF;
+    width: 100%;
+    display: block;
+    height: 40px;
+    margin: 15px 0px;
+    padding: 10px 50px;
+    cursor: pointer;
+    font-size: 15px;
+    box-sizing: border-box;
+}
+
+#chat-box {
+    background: lightgrey;
+    border: 1px solid #ffdddd;
+    border-radius: 4px;
+    border-bottom-left-radius:0px;
+    border-bottom-right-radius: 0px;
+    min-height: 300px;
+    padding: 10px;
+    overflow: auto;
+}
+
+.message-box-in-chat{
+    color: black;
+    margin: 10px 0px;
+    font-size:16px;
+}
+
+.chat-box-message{
+    color: black;
+    padding: 5px 10px; 
+    background-color: white;
+    border: 1px solid #ffdddd;
+    border-radius:10px;
+    display:inline-block;
+}
+
+.input{
+    border: 1px solid #ffdddd;
+    border-top: 0px;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 10px 8px;
+    font-size: 15px;
+    color: black;
+}
+
+.input-mail{
+    border: 1px solid #ffdddd;
+    border-top: 0px;
+    width: 100%;
+    padding: 10px 8px;
+    font-size: 14px;
+    color: black;
+}
+
+.create-convo-btn{
+    width: 100%;
+    border: none;
+    height: 45px;
+    font-size: 16pt;
+    background-color: #424250;
+    color: white;
+    display: block;
+    cursor: pointer;  
+}
+
+.create-convo-btn:hover{
+    background-color: grey;
+    color: black;
+}

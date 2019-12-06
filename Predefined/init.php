@@ -6,6 +6,7 @@ require_once('./Backend/Controllers/ContentController.php');
 require_once('./Backend/Controllers/MemoryCache.php');
 require_once('./Backend/Controllers/Helper.php');
 require_once('./Backend/Controllers/AdminManagementController.php');
+require_once('./Backend/Controllers/MailController.php');
 
 $dbController = new DatabaseController();
 ?>

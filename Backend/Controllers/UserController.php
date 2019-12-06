@@ -18,6 +18,25 @@
 			$dateOfBirth = parent::getEscaped($post['dob']);
 			$roleinSCCId = 3;
 
+			if(isset($_POST['g-recaptcha-response'])){
+				$captcha=$_POST['g-recaptcha-response'];
+			}
+			if(!$captcha){
+				Helper::setSessionVariable("MESSAGE", "Please check the captcha. It was incorrect.");
+				Helper::redirectToLocation("signup.php");
+			}
+
+		  	$secretKey = "6LdRXMYUAAAAAP_kqRXl1OdC4OGD8KSGDB5jd5Tf";
+			$url =  'https://www.google.com/recaptcha/api/siteverify?secret=' . urlencode($secretKey) . '&response=' . urlencode($captcha);
+			$response = file_get_contents($url);
+			$responseKeys = json_decode($response,true);
+			if($responseKeys["success"]) {
+				Helper::setSessionVariable("MESSAGE", "Captcha was correct.");
+			} else {
+				Helper::setSessionVariable("MESSAGE", "Google identified you as a bot. Try the captcha again..");
+				Helper::redirectToLocation("signup.php");
+			}
+			
 			$curentDate = new DateTime();
 			$age = date_create($dateOfBirth)->diff($curentDate)->y;
 
@@ -147,6 +166,22 @@
 			return (isset($_SESSION["USERNAME"]) && $_SESSION["USERNAME"] != null);
 		}
 
+		public function getUsername($user_id){
+			$usernameRs = parent::getResultSetAsArray("SELECT username FROM User WHERE userId = '$user_id'");
+			if (count($usernameRs) === 1) {
+				return ucwords($usernameRs[0]['username']);
+			}
+		}
+
+		public function getAllManagers(){
+			$query = "SELECT ev_ma.*, ev.event_name, ma.user_id, ma.address, ma.phone_number, us.username FROM event_manager AS ev_ma
+					  INNER JOIN Manager AS ma ON ma.managerId = ev_ma.manager_id
+					  INNER JOIN Event AS ev ON ev.eventId = ev_ma.event_id
+					  INNER JOIN User AS us ON ma.user_id = us.userId;";
+					
+			return parent::getResultSetAsArray($query);
+		}
+		
 		public function isUserAnEventManager($userId){
 
 			$query = "SELECT * FROM event_manager AS e_m 

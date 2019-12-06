@@ -3,6 +3,7 @@ session_start();
 include('./Predefined/init.php');
 
 $userController = new UserController();
+$contentController = new ContentController();
 $adminManagerController = new AdminManagementController();
 
 if (!$userController->isLoggedIn()){
@@ -27,16 +28,11 @@ if (!$userController->isLoggedIn()){
 <?php 
   include('./Predefined/header.php'); 
   include('./Predefined/sideMenu.php'); 
-
 ?>
 <body>
 <div class="col-10 no-padding">
-<?php
-$events = ContentController::getInstance()->getEventsWhereUserIsParticipant($_SESSION['IDENTIFIER']);
-    if (count($events) > 0){
-        ?> 
         <div class="row main-content">
-            <h2>Actions:</h2>
+            <h2>Admin actions:</h2>
             <div class="col-2 no-padding">
                 <div class="row no-padding">
                     <div class="col-12 no-padding">
@@ -53,9 +49,6 @@ $events = ContentController::getInstance()->getEventsWhereUserIsParticipant($_SE
                     </div> 
                     <div class="col-12 no-padding">
                         <button class="action-btn" id="manageContent" onClick="window.location.href='adminPanel.php?action=manageContent'">Manage content</button>
-                    </div> 
-                    <div class="col-12 no-padding">
-                        <button class="action-btn" id="validateUsers" onClick="window.location.href='adminPanel.php?action=validateUsers'">Validare users</button>
                     </div> 
                     <div class="col-12 no-padding">
                         <button class="action-btn" id="validateEvents" onClick="window.location.href='adminPanel.php?action=validateEvents'">Validate events requests</button>
@@ -82,12 +75,12 @@ $events = ContentController::getInstance()->getEventsWhereUserIsParticipant($_SE
                         }
                         case 'manageEvents' : {
                             LogController::getInstance()->LogAction($_SESSION['IDENTIFIER'], "User ". $_SESSION['USERNAME'] . " is managing events in the admin panel");
-
+                            include('./Backend/Managers/eventsManagement.php');
                         break;
                         }
                         case 'manageEventsManagers' : {
                             LogController::getInstance()->LogAction($_SESSION['IDENTIFIER'], "User ". $_SESSION['USERNAME'] . " is managing events managers in the admin panel");
-
+                            include('./Backend/Managers/eventManagersManagement.php');
                         break;
                         }
                         case 'manageGroups' : {
@@ -99,11 +92,7 @@ $events = ContentController::getInstance()->getEventsWhereUserIsParticipant($_SE
                             LogController::getInstance()->LogAction($_SESSION['IDENTIFIER'], "User ". $_SESSION['USERNAME'] . " is managing managing content in the admin panel");
 
                         break;
-                        }
-                        case 'validateUsers' : {
-                            LogController::getInstance()->LogAction($_SESSION['IDENTIFIER'], "User ". $_SESSION['USERNAME'] . " is validating users in the admin panel");
-
-                        break;
+                        
                         }
                         case 'validateEvents' : {
                             LogController::getInstance()->LogAction($_SESSION['IDENTIFIER'], "User ". $_SESSION['USERNAME'] . " is validating events in the admin panel");
@@ -115,26 +104,19 @@ $events = ContentController::getInstance()->getEventsWhereUserIsParticipant($_SE
 
                         break;
                         }
-
                             ?> 
                           
                         <?php 
                         
                     }
                 }
-
 ?>
-            
-                    
-
                     </div>
 
                 </div>
             </div>
         </div>
 </div>
-        <?php
-    }
-    ?>
+
 </body>
 </html>

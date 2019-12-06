@@ -195,16 +195,17 @@ CREATE TABLE `Bill` (
 );
 
 CREATE TABLE `Message` (
-  `messageId` int PRIMARY KEY,
+  `messageId` int PRIMARY KEY AUTO_INCREMENT,
+  `conversationId` int,
+  `sender_user_id` int,
   `content` text,
   `timestamp` datetime DEFAULT CURRENT_TIMESTAMP
 );
 
-CREATE TABLE `messages_conversation` (
-  `message_id` int,
-  `recipient_id` int,
-  `sender_id` int,
-  PRIMARY KEY (`message_id`, `recipient_id`, `sender_id`)
+CREATE TABLE `Conversation` (
+  `conversationId` int PRIMARY KEY AUTO_INCREMENT,
+  `one_user_id` int,
+  `second_user_id` int
 );
 
 CREATE TABLE `BannedUsers` (
@@ -271,8 +272,9 @@ ALTER TABLE `Fee` ADD FOREIGN KEY (`eventType_id`) REFERENCES `EventType` (`id`)
 
 ALTER TABLE `Bill` ADD FOREIGN KEY (`pay_by_manager_id`) REFERENCES `event_manager` (`manager_id`);
 
-ALTER TABLE `messages_conversation` ADD FOREIGN KEY (`message_id`) REFERENCES `Message` (`messageId`) ON DELETE CASCADE;
-ALTER TABLE `messages_conversation` ADD FOREIGN KEY (`recipient_id`) REFERENCES `Participant` (`participantId`) ON DELETE CASCADE;
-ALTER TABLE `messages_conversation` ADD FOREIGN KEY (`sender_id`) REFERENCES `Participant` (`participantId`) ON DELETE CASCADE;
+ALTER TABLE `Message` ADD FOREIGN KEY (`conversationId`) REFERENCES `Conversation` (`conversationId`) ON DELETE CASCADE;
+
+ALTER TABLE `Conversation` ADD FOREIGN KEY (`one_user_id`) REFERENCES `User` (`userId`) ON DELETE CASCADE;
+ALTER TABLE `Conversation` ADD FOREIGN KEY (`second_user_id`) REFERENCES `User` (`userId`) ON DELETE CASCADE;
 
 INSERT INTO `SCCSystemStatus`(id, IsDatabaseCreated, IsDatabasePopulated) VALUES('1', true, false);

@@ -10,6 +10,7 @@ DROP TRIGGER IF EXISTS after_event_manager_insert_create_event_participant;
 DROP TRIGGER IF EXISTS before_group_insert_create_default_page;
 DROP TRIGGER IF EXISTS after_event_group_insert;
 DROP TRIGGER IF EXISTS before_deactivating_user;
+DROP TRIGGER IF EXISTS after_inserting_conversation;
 
 DELIMITER $$
 CREATE TRIGGER after_user_insert_create_derived_admin_participant_or_controller AFTER INSERT ON `User` FOR EACH ROW
@@ -28,10 +29,17 @@ BEGIN
         INSERT INTO `Controller`(`user_id`) VALUES (NEW.userId);
     END IF;
     
+    INSERT INTO `Conversation`(`one_user_id`, `second_user_id`) VALUES (1, NEW.userId);
     INSERT INTO `Newsfeed`(`userId`, `checkedAt`) VALUES (NEW.userId, NULL);
 END;
 $$
 
+CREATE TRIGGER after_inserting_conversation AFTER INSERT ON `Conversation` FOR EACH ROW
+BEGIN
+	INSERT INTO `Message` (`conversationId`, `sender_user_id`, `content`) VALUES 
+    (New.conversationId, 1, "Welcome to your inbox. You can send messages to anyone in the platform. The platform may also send you messages from now.");
+END;
+	
 CREATE TRIGGER before_deleting_administrator_prevent_deleting_root BEFORE DELETE ON `Administrator` FOR EACH ROW
 BEGIN
 	IF (OLD.user_id = 1) THEN
