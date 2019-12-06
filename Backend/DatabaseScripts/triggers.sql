@@ -1,4 +1,4 @@
-USE SCCNetwork;
+USE prc353_2;
 DROP TRIGGER IF EXISTS after_user_insert_create_derived_admin_participant_or_controller;
 DROP TRIGGER IF EXISTS before_deleting_administrator_prevent_deleting_root;
 DROP TRIGGER IF EXISTS before_deleting_user_prevent_deleting_admin_or_root;

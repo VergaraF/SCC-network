@@ -1,4 +1,4 @@
-USE SCCNetwork;
+USE prc353_2;
 DROP EVENT IF EXISTS deactivate_expired_events_daily;
 DROP EVENT IF EXISTS marked_expired_events_as_deleted_after_seven_years_period;
 
