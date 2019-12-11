@@ -24,29 +24,11 @@ class AdminManagementController extends UserController{
     }
     //this function is used by the admin to deactivate other users of the site
     public function deleteUser($user_id){
-       // $allTheConversations = Conversation::displayConversations($user_id);
-
-        //delete all the conversations with all their messages
-      //  for ($row=0; $row < count($allTheConversations); $row++) { 
-          //  Conversation::deleteConversation($allTheConversations[$row]['conversationId']);
-       // }
-        
-        //get all the apartments of this user in an array
-        // $apartmentArray = Product::displayOwnerProducts($user_id);
-
-        // //delete all the selected apartments
-        // for ($row=0; $row < count($apartmentArray); $row++) { 
-        //     Product::deleteProduct($apartmentArray[$row]['dwelling_Id'], $user_id);
-        // }
-
-        // //delete the user from the database
-        // parent::executeSqlQuery("DELETE FROM bannedusers WHERE user_id = '$user_id'");
-        // parent::executeSqlQuery("DELETE FROM users WHERE user_id = '$user_id'");
-        // header("location: adminPanel.php?action=user");
+     
     }
 
     public function banUser($user_id, $message, $banned_by_id){
-        $rs = parent::checkBannedUsers($user_id);
+        $rs = parent::getDeactivatedUser($user_id);
         $temp = parent::getResultSetAsArray("SELECT adminId FROM Administrator WHERE user_id = '$banned_by_id'");
 
         $tempUserToBanId = parent::getResultSetAsArray("SELECT adminId FROM Administrator WHERE user_id = '$user_id'");

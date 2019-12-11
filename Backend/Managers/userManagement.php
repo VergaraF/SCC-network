@@ -8,6 +8,7 @@
         <th>Role</th>
         <th>Options</th>
         <?php
+        
         $profileInfo = $userController->getAllUsers();
         if (count($profileInfo) > 0) {
             for ($row = 0; $row < count($profileInfo); $row++) {
@@ -26,7 +27,7 @@
                         <td>
                             <input name='editUser' type='submit' value='Edit' />
                             <input name='seeUserActions' type='submit' value='See actions' />
-                            <?php if (count($userController->checkBannedUsers($profileInfo[$row]['userId'])) > 0) {
+                            <?php if (count($userController->getDeactivatedUser($profileInfo[$row]['userId'])) > 0) {
                                             echo "<input name='activateUser' type='submit' value='Activate' />";
                                         } else {
                                             ?>

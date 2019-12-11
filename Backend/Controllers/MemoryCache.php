@@ -18,7 +18,7 @@
         }
 
         public function getUserIdByUsername($username){
-            $result =  $mapWithUsernameAsKey[$username];
+            $result =  $this->mapWithUsernameAsKey[$username];
             if ($result == null){
                 return Helper::USER_NOT_IN_APP_CACHE;
             }
@@ -27,7 +27,7 @@
         }
 
         public function setUserInCache($username, $uid){
-            $mapWithUsernameAsKeyp[$username] = $uid;
+            $this->mapWithUsernameAsKeyp[$username] = $uid;
         }
     }
 ?>

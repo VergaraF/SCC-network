@@ -1,4 +1,3 @@
-DROP DATABASE prc353_2;
 
 CREATE DATABASE IF NOT EXISTS prc353_2;
 USE prc353_2;
@@ -79,7 +78,7 @@ CREATE TABLE `Event` (
 
 CREATE TABLE `Page` (
   `pageId` int PRIMARY KEY AUTO_INCREMENT,
-  `content` text DEFAULT 'eventPage.php'
+  `content` text
 );
 
 CREATE TABLE `EventStatus` (

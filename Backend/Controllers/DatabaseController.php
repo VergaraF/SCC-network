@@ -4,19 +4,19 @@
 		public function __construct(){}
 
         public function createConnection(){
-			/*$host="127.0.0.1";
+			$host="127.0.0.1";
 			$port=3306;
 			$socket="";
 			$user="root";
 			$password="rootpassword";
 			$dbname="sccnetwork";
-*/
+/*
 			$host="prc353.encs.concordia.ca";
 			$port=3306;
 			$socket="";
 			$user="prc353_2";
 			$password="D3Ajp5";
-			$dbname="prc353_2";
+			$dbname="prc353_2";*/
 			$this->connection = new mysqli($host, $user, $password, $dbname, $port, $socket) 
 				or die ('Could not connect to the database server' . mysqli_connect_error());
             
