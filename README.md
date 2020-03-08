@@ -1,6 +1,6 @@
-<b>SCC-Network</b>
+# <b>SCC-Network</b>
 
-<b>Installation</b>
+## <b>Installation</b>
 
 1. Make sure you have installed MySQL 8.x and  PHP 7.x
 2. Open the folder Backend/DatabaseScrips where you will find the following files:
